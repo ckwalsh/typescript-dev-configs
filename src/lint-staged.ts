@@ -9,6 +9,9 @@ import type { Configuration } from 'lint-staged';
 
 export default function defineLintStagedConfig(): Configuration {
   return {
-    '*.{js,jsx,ts,tsx}': ['eslint --fix', 'jest --findRelatedTests --passWithNoTests'],
+    '*.{js,jsx,ts,tsx}': [
+      'pnpm run lint-fix',
+      'pnpm run test --passWithNoTests',
+    ],
   };
 }

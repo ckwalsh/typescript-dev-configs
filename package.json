@@ -24,8 +24,8 @@
     "attw": "( pnpm pack --out attw.tgz && attw attw.tgz && rm -f attw.tgz ) || { rm -f attw.tgz; exit 1; }",
     "build": "tsup",
     "knip": "knip",
-    "lint": "eslint",
-    "lint-fix": "eslint --fix",
+    "lint": "eslint --cache",
+    "lint-fix": "eslint --cache --fix",
     "lint-staged": "lint-staged",
     "prepare": "husky && pnpm run build",
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
@@ -49,9 +49,9 @@
       "import": "./dist/jest.js"
     },
     "./lint-staged": {
-      "source": "./src/jest.ts",
-      "types": "./dist/jest.d.ts",
-      "import": "./dist/jest.js"
+      "source": "./src/lint-staged.ts",
+      "types": "./dist/lint-staged.d.ts",
+      "import": "./dist/lint-staged.js"
     },
     "./prettier": {
       "source": "./src/prettier.ts",
@@ -103,10 +103,6 @@
     "knip": "^5.52.0",
     "lint-staged": "^15.5.1",
     "prettier": "^3.5.3",
-    "typescript": "^5.8.3",
-    "v8": "^0.1.0"
-  },
-  "peerDependencies": {
-    "v8": "^0.1.0"
+    "typescript": "^5.8.3"
   }
 }

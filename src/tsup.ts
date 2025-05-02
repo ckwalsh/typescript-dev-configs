@@ -11,7 +11,6 @@ import type { Options } from 'tsup';
 export default function defineTsupConfig(options: Partial<Options> = {}) {
   return defineConfig({
     outDir: 'dist',
-    clean: true,
     dts: true,
     sourcemap: true,
     format: ['cjs', 'esm'],
