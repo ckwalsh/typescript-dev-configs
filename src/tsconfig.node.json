@@ -1,0 +1,23 @@
+{
+  "extends": "@tsconfig/node22/tsconfig.json",
+  "compilerOptions": {
+    // Typechecking
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    // Modules
+    "customConditions": ["source"],
+    "noUncheckedSideEffectImports": true,
+    "rewriteRelativeImportExtensions": true,
+    "resolveJsonModule": true,
+    // Emit
+    "noEmit": true,
+    // Interop Contraints
+    "isolatedModules": true,
+    // Language and Environment
+    "jsx": "react-jsx"
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "name": "@ckwalsh/typescript-dev-configs",
+  "version": "0.0.0",
+  "description": "Dev tool configs for @ckwalsh/* typescript packages",
+  "keywords": [],
+  "homepage": "https://github.com/ckwalsh/typescript-configs#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ckwalsh/typescript-configs"
+  },
+  "bugs": {
+    "url": "https://github.com/ckwalsh/typescript-configs/issues"
+  },
+  "license": "MIT",
+  "author": "Cullen Walsh",
+  "type": "module",
+  "files": [
+    "dist",
+    "src/tsconfig.*.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "attw": "( pnpm pack --out attw.tgz && attw attw.tgz && rm -f attw.tgz ) || { rm -f attw.tgz; exit 1; }",
+    "build": "tsup",
+    "knip": "knip",
+    "lint": "eslint",
+    "lint-fix": "eslint --fix",
+    "lint-staged": "lint-staged",
+    "prepare": "husky && pnpm run build",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./tsconfig.json": "./tsconfig.base.json",
+    "./eslint": {
+      "source": "./src/eslint.ts",
+      "types": "./dist/eslint.d.ts",
+      "import": "./dist/eslint.js"
+    },
+    "./jest": {
+      "source": "./src/jest.ts",
+      "types": "./dist/jest.d.ts",
+      "import": "./dist/jest.js"
+    },
+    "./lint-staged": {
+      "source": "./src/jest.ts",
+      "types": "./dist/jest.d.ts",
+      "import": "./dist/jest.js"
+    },
+    "./prettier": {
+      "source": "./src/prettier.ts",
+      "types": "./dist/prettier.d.ts",
+      "import": "./dist/prettier.js"
+    },
+    "./tsup": {
+      "source": "./src/tsup.ts",
+      "types": "./dist/tsup.d.ts",
+      "import": "./dist/tsup.js"
+    }
+  },
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "directories": {
+    "lib": "dist"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "pnpm@10.10.0",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "onFail": "error"
+    }
+  },
+  "dependencies": {
+    "@eslint/js": "^9.25.1",
+    "@trivago/prettier-plugin-sort-imports": "git://github.com/ckwalsh/prettier-plugin-sort-imports.git",
+    "@tsconfig/node22": "^22.0.1",
+    "@types/node": "^22.15.3",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-import-resolver-typescript": "^4.3.4",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-import-x": "^4.11.0",
+    "eslint-plugin-license-header": "^0.8.0",
+    "eslint-plugin-prettier": "^5.2.6",
+    "globals": "^16.0.0",
+    "ts-jest": "^29.3.2",
+    "tsup": "^8.4.0",
+    "typescript-eslint": "^8.31.1"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "eslint": "^9.25.1",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "knip": "^5.52.0",
+    "lint-staged": "^15.5.1",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "v8": "^0.1.0"
+  },
+  "peerDependencies": {
+    "v8": "^0.1.0"
+  }
+}

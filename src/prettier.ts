@@ -1,0 +1,35 @@
+/*
+ * Copyright (c) Cullen Walsh
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import sortImportsPlugin from '@trivago/prettier-plugin-sort-imports';
+import type { Config } from 'prettier';
+
+export default function definePrettierConfig(): Config {
+  return {
+    printWidth: 120,
+    tabWidth: 2,
+    useTabs: false,
+    semi: true,
+    singleQuote: true,
+    quoteProps: 'consistent',
+    jsxSingleQuote: false,
+    trailingComma: 'all',
+    bracketSpacing: true,
+    bracketSameLine: false,
+    arrowParens: 'always',
+    proseWrap: 'always',
+    endOfLine: 'lf',
+    embeddedLanguageFormatting: 'auto',
+    singleAttributePerLine: true,
+    plugins: [sortImportsPlugin],
+    importOrder: ['^@ckwalsh/(.*)$', '^[./]'],
+    importOrderSeparation: true,
+    importOrderSortSpecifiers: true,
+    importOrderIgnoreHeaderComments: 1,
+    importOrderIgnoreHeaderCommentTypes: 'CommentBlock',
+  };
+}
