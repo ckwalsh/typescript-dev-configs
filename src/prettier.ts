@@ -10,7 +10,7 @@ import type { Config } from 'prettier';
 
 export default function definePrettierConfig(): Config {
   return {
-    printWidth: 120,
+    // printWidth: 120,
     tabWidth: 2,
     useTabs: false,
     semi: true,
@@ -26,6 +26,7 @@ export default function definePrettierConfig(): Config {
     embeddedLanguageFormatting: 'auto',
     singleAttributePerLine: true,
     plugins: [sortImportsPlugin],
+    // @trivago/prettier-plugin-sort-imports
     importOrder: ['^@ckwalsh/(.*)$', '^[./]'],
     importOrderSeparation: true,
     importOrderSortSpecifiers: true,
