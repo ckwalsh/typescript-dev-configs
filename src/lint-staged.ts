@@ -13,5 +13,6 @@ export default function defineLintStagedConfig(): Configuration {
       'pnpm run lint-fix',
       'pnpm run test --passWithNoTests',
     ],
+    '*.md': ['prettier --write'],
   };
 }

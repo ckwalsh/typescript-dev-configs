@@ -21,8 +21,9 @@
     "LICENSE"
   ],
   "scripts": {
-    "attw": "( pnpm pack --out attw.tgz && attw attw.tgz && rm -f attw.tgz ) || { rm -f attw.tgz; exit 1; }",
+    "attw": "pnpm pack --out attw.tgz && attw attw.tgz",
     "build": "tsup",
+    "build-watch": "tsup --watch",
     "knip": "knip",
     "lint": "eslint --cache",
     "lint-fix": "eslint --cache --fix",
@@ -96,6 +97,7 @@
     "typescript-eslint": "^8.31.1"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.4",
     "@jest/globals": "^29.7.0",
     "eslint": "^9.25.1",
     "husky": "^9.1.7",
