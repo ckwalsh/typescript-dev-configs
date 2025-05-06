@@ -38,7 +38,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./tsconfig.json": "./tsconfig.base.json",
+    "./tsconfig.json": "./src/tsconfig.node.json",
     "./eslint": {
       "source": "./src/eslint.ts",
       "types": "./dist/eslint.d.ts",
