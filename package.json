@@ -15,13 +15,18 @@
   "author": "Cullen Walsh",
   "type": "module",
   "files": [
+    "eslint",
+    "jest",
+    "lint-staged",
+    "prettier",
+    "tsup",
     "dist",
     "src/tsconfig.*.json",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
-    "attw": "pnpm pack --out attw.tgz && attw attw.tgz",
+    "attw": "pnpm pack --out attw.tgz && attw attw.tgz --exclude-entrypoints ./tsconfig.json",
     "build": "tsup",
     "build-watch": "tsup --watch",
     "knip": "knip",
@@ -35,34 +40,70 @@
   "exports": {
     ".": {
       "source": "./src/index.ts",
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "require": "./dist/index.cjs"
+      }
     },
     "./tsconfig.json": "./src/tsconfig.node.json",
     "./eslint": {
       "source": "./src/eslint.ts",
-      "types": "./dist/eslint.d.ts",
-      "import": "./dist/eslint.js"
+      "import": {
+        "types": "./dist/eslint.d.ts",
+        "import": "./dist/eslint.js"
+      },
+      "require": {
+        "types": "./dist/eslint.d.cts",
+        "require": "./dist/eslint.cjs"
+      }
     },
     "./jest": {
       "source": "./src/jest.ts",
-      "types": "./dist/jest.d.ts",
-      "import": "./dist/jest.js"
+      "import": {
+        "types": "./dist/jest.d.ts",
+        "import": "./dist/jest.js"
+      },
+      "require": {
+        "types": "./dist/jest.d.cts",
+        "require": "./dist/jest.cjs"
+      }
     },
     "./lint-staged": {
       "source": "./src/lint-staged.ts",
-      "types": "./dist/lint-staged.d.ts",
-      "import": "./dist/lint-staged.js"
+      "import": {
+        "types": "./dist/lint-staged.d.ts",
+        "import": "./dist/lint-staged.js"
+      },
+      "require": {
+        "types": "./dist/lint-staged.d.cts",
+        "require": "./dist/lint-staged.cjs"
+      }
     },
     "./prettier": {
       "source": "./src/prettier.ts",
-      "types": "./dist/prettier.d.ts",
-      "import": "./dist/prettier.js"
+      "import": {
+        "types": "./dist/prettier.d.ts",
+        "import": "./dist/prettier.js"
+      },
+      "require": {
+        "types": "./dist/prettier.d.cts",
+        "require": "./dist/prettier.cjs"
+      }
     },
     "./tsup": {
       "source": "./src/tsup.ts",
-      "types": "./dist/tsup.d.ts",
-      "import": "./dist/tsup.js"
+      "import": {
+        "types": "./dist/tsup.d.ts",
+        "import": "./dist/tsup.js"
+      },
+      "require": {
+        "types": "./dist/tsup.d.cts",
+        "require": "./dist/tsup.cjs"
+      }
     }
   },
   "module": "./dist/index.js",

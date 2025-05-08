@@ -3,3 +3,4 @@ pnpm run build
 # This helps lint-staged worrk under git and sapling
 if [ -n "${HG}" ]; then pnpm run lint-staged --no-stash --diff HEAD; else pnpm run lint-staged; fi;
 pnpm run knip
+pnpm run attw
