@@ -11,9 +11,6 @@ importers:
       '@eslint/js':
         specifier: ^9.26.0
         version: 9.26.0
-      '@trivago/prettier-plugin-sort-imports':
-        specifier: github:ckwalsh/prettier-plugin-sort-imports
-        version: https://codeload.github.com/ckwalsh/prettier-plugin-sort-imports/tar.gz/56c2da3d8cbdf63bd69b2a1bcd3653ec0210ca7f(prettier@3.5.3)
       '@tsconfig/node22':
         specifier: ^22.0.1
         version: 22.0.1
@@ -57,6 +54,9 @@ importers:
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: github:ckwalsh/prettier-plugin-sort-imports
+        version: https://codeload.github.com/ckwalsh/prettier-plugin-sort-imports/tar.gz/56c2da3d8cbdf63bd69b2a1bcd3653ec0210ca7f(prettier@3.5.3)
       eslint:
         specifier: ^9.26.0
         version: 9.26.0(jiti@2.4.2)

@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import sortImportsPlugin from '@trivago/prettier-plugin-sort-imports';
 import type { Config } from 'prettier';
 
 export default function definePrettierConfig(): Config {
@@ -25,7 +24,7 @@ export default function definePrettierConfig(): Config {
     endOfLine: 'lf',
     embeddedLanguageFormatting: 'auto',
     singleAttributePerLine: true,
-    plugins: [sortImportsPlugin],
+    plugins: ['@trivago/prettier-plugin-sort-imports'],
     // @trivago/prettier-plugin-sort-imports
     importOrder: ['^@ckwalsh/(.*)$', '^[./]'],
     importOrderSeparation: true,
