@@ -143,9 +143,7 @@ function defineTsAndJsConfig(
 
 //////////////////////////////////////
 
-export default function defineESLintConfig(
-  options: Partial<Options> = {},
-): tseslint.Config {
+export function defineConfig(options: Partial<Options> = {}): tseslint.Config {
   const resolvedOptions: Options = { ...defaultOptions, ...options };
 
   const tsAndJsConfig = defineTsAndJsConfig(resolvedOptions);

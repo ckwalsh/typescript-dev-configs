@@ -5,14 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { Configuration } from 'lint-staged';
+import type { Configuration, FunctionTask } from 'lint-staged';
 
-export default function defineLintStagedConfig(): Configuration {
+export function defineConfig(
+  config: Exclude<Configuration, FunctionTask> = {},
+): Configuration {
   return {
     '*.{js,jsx,ts,tsx}': [
       'pnpm run lint-fix',
       'pnpm run test --passWithNoTests',
     ],
-    '*.md': ['prettier --write'],
+    ...config,
   };
 }

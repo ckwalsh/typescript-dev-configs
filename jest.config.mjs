@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import defineJestConfig from '@ckwalsh/typescript-dev-configs/jest';
+import { jest } from '@ckwalsh/typescript-dev-configs';
 
-export default defineJestConfig();
+const config = jest.defineConfig();
+
+export default config;

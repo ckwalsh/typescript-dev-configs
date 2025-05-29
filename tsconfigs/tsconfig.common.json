@@ -1,5 +1,4 @@
 {
-  "extends": "@tsconfig/node22/tsconfig.json",
   "compilerOptions": {
     // Typechecking
     "strict": true,
@@ -9,12 +8,13 @@
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
     // Modules
+    "allowImportingTsExtensions": true,
     "customConditions": ["source"],
     "noUncheckedSideEffectImports": true,
     "rewriteRelativeImportExtensions": true,
     "resolveJsonModule": true,
     // Emit
-    "noEmit": true,
+    "noEmit": true, // use tsup for building
     // Interop Contraints
     "isolatedModules": true,
     // Language and Environment

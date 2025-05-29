@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import defineESLintConfig from '@ckwalsh/typescript-dev-configs/eslint';
+import { eslint } from '@ckwalsh/typescript-dev-configs';
 
-export default defineESLintConfig();
+const config = eslint.defineConfig();
+
+export default config;

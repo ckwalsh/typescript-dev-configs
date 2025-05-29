@@ -6,10 +6,8 @@
  */
 
 import pkg from './package.json' with { type: 'json' };
-import defineTsupConfig from './src/tsup.ts';
+import * as tsup from './src/tsup.ts';
 
-const entry: string[] = Object.values(pkg.exports)
-  .map((v) => (typeof v === 'string' ? undefined : v.source))
-  .filter((v) => v !== undefined);
+const config = tsup.defineConfig(pkg, { replaceNodeEnv: false });
 
-export default defineTsupConfig({ entry });
+export default config;

@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import definePrettierConfig from '@ckwalsh/typescript-dev-configs/prettier';
+import { prettier } from '@ckwalsh/typescript-dev-configs';
 
-export default definePrettierConfig();
+const config = prettier.defineConfig();
+
+export default config;

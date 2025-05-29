@@ -15,18 +15,13 @@
   "author": "Cullen Walsh",
   "type": "module",
   "files": [
-    "eslint",
-    "jest",
-    "lint-staged",
-    "prettier",
-    "tsup",
     "dist",
-    "src/tsconfig.*.json",
+    "tsconfigs",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
-    "attw": "pnpm pack --out attw.tgz && attw attw.tgz --exclude-entrypoints ./tsconfig.json",
+    "attw": "pnpm pack --out attw.tgz && attw --profile node16 attw.tgz",
     "build": "tsup",
     "build-watch": "tsup --watch",
     "knip": "knip",
@@ -49,62 +44,9 @@
         "require": "./dist/index.cjs"
       }
     },
-    "./tsconfig.json": "./src/tsconfig.node.json",
-    "./eslint": {
-      "source": "./src/eslint.ts",
-      "import": {
-        "types": "./dist/eslint.d.ts",
-        "import": "./dist/eslint.js"
-      },
-      "require": {
-        "types": "./dist/eslint.d.cts",
-        "require": "./dist/eslint.cjs"
-      }
-    },
-    "./jest": {
-      "source": "./src/jest.ts",
-      "import": {
-        "types": "./dist/jest.d.ts",
-        "import": "./dist/jest.js"
-      },
-      "require": {
-        "types": "./dist/jest.d.cts",
-        "require": "./dist/jest.cjs"
-      }
-    },
-    "./lint-staged": {
-      "source": "./src/lint-staged.ts",
-      "import": {
-        "types": "./dist/lint-staged.d.ts",
-        "import": "./dist/lint-staged.js"
-      },
-      "require": {
-        "types": "./dist/lint-staged.d.cts",
-        "require": "./dist/lint-staged.cjs"
-      }
-    },
-    "./prettier": {
-      "source": "./src/prettier.ts",
-      "import": {
-        "types": "./dist/prettier.d.ts",
-        "import": "./dist/prettier.js"
-      },
-      "require": {
-        "types": "./dist/prettier.d.cts",
-        "require": "./dist/prettier.cjs"
-      }
-    },
-    "./tsup": {
-      "source": "./src/tsup.ts",
-      "import": {
-        "types": "./dist/tsup.d.ts",
-        "import": "./dist/tsup.js"
-      },
-      "require": {
-        "types": "./dist/tsup.d.cts",
-        "require": "./dist/tsup.cjs"
-      }
-    }
+    "./tsconfig.json": "./tsconfigs/tsconfig.json",
+    "./tsconfig.browser.json": "./tsconfigs/tsconfig.browser.json",
+    "./tsconfig.node.json": "./tsconfigs/tsconfig.node.json"
   },
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -123,7 +65,7 @@
   },
   "dependencies": {
     "@eslint/js": "^9.26.0",
-    "@tsconfig/node22": "^22.0.1",
+    "@tsconfig/node24": "^24.0.1",
     "@types/node": "^22.15.12",
     "eslint-config-prettier": "^10.1.2",
     "eslint-import-resolver-typescript": "^4.3.4",
@@ -149,6 +91,7 @@
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
-    "@tsconfig/node22": "^22.0.1"
+    "@tsconfig/node24": "^24.0.1",
+    "@types/node": "^22.15.12"
   }
 }

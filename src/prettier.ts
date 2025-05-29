@@ -7,7 +7,7 @@
 
 import type { Config } from 'prettier';
 
-export default function definePrettierConfig(): Config {
+export function defineConfig(config: Config): Config {
   return {
     // printWidth: 120,
     tabWidth: 2,
@@ -31,5 +31,6 @@ export default function definePrettierConfig(): Config {
     importOrderSortSpecifiers: true,
     importOrderIgnoreHeaderComments: 1,
     importOrderIgnoreHeaderCommentTypes: 'CommentBlock',
+    ...config,
   };
 }

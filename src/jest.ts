@@ -10,7 +10,7 @@ import { createDefaultEsmPreset } from 'ts-jest';
 
 const presetConfig = createDefaultEsmPreset();
 
-export default function defineJestConfig(config: Partial<Config>): Config {
+export function defineConfig(config: Partial<Config> = {}): Config {
   return {
     ...presetConfig,
     coverageProvider: 'v8',
