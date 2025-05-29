@@ -21,8 +21,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "attw": "pnpm pack --out attw.tgz && attw --profile node16 attw.tgz",
-    "build": "tsup",
+    "attw": "pnpm pack --out attw.tgz && attw --quiet attw.tgz || attw attw.tgz",
+    "build": "tsup --silent",
     "build-watch": "tsup --watch",
     "knip": "knip",
     "lint": "eslint --cache",
