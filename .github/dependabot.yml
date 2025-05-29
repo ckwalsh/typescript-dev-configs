@@ -10,7 +10,5 @@ updates:
         dependency-type: "production"
       devDependencies:
         dependency-type: "development"
-    reviewers:
-      - "ckwalsh"
     schedule:
       interval: "weekly"
