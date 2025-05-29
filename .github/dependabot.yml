@@ -1,16 +1,16 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    assignees:
-      - "ckwalsh"
     commit-message:
-      prefix: "dependencies"
-      prefix-development: "devDependencies"
+      prefix: "[deps] "
+      prefix-development: "[dev-deps] "
     directory: "/"
     groups:
       production-dependencies:
         dependency-type: "production"
       development-dependencies:
         dependency-type: "development"
+    reviewers:
+      - "ckwalsh"
     schedule:
       interval: "weekly"
