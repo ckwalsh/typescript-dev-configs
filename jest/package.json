@@ -1,4 +1,0 @@
-{
-  "main": "../dist/jest.cjs",
-  "types": "../dist/jest.d.cts"
-}

@@ -1,4 +1,0 @@
-{
-  "main": "../dist/eslint.cjs",
-  "types": "../dist/eslint.d.cts"
-}

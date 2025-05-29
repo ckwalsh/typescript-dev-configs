@@ -1,4 +1,0 @@
-{
-  "main": "../dist/tsup.cjs",
-  "types": "../dist/tsup.d.cts"
-}
