@@ -6,9 +6,9 @@ updates:
       prefix-development: "[dev-deps] "
     directory: "/"
     groups:
-      production-dependencies:
+      dependencies:
         dependency-type: "production"
-      development-dependencies:
+      devDependencies:
         dependency-type: "development"
     reviewers:
       - "ckwalsh"
