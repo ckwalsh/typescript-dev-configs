@@ -64,7 +64,7 @@
     }
   },
   "dependencies": {
-    "@eslint/js": "^9.26.0",
+    "@eslint/js": "^9.27.0",
     "@tsconfig/node24": "^24.0.1",
     "@types/node": "^22.15.12",
     "eslint-config-prettier": "^10.1.2",
