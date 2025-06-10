@@ -44,6 +44,7 @@ const defaultOptions: Options = {
 
 const jsFiles = ['**/*.js', '**/*.jsx', '**/*.mjs', '**/*.cjs'];
 const tsFiles = ['**/*.ts', '**/*.tsx', '**/*.tjs', '**/*.tjs'];
+
 const tsDeclarationFiles = [
   '**/*.d.ts',
   '**/*.d.tsx',
@@ -51,6 +52,16 @@ const tsDeclarationFiles = [
   '**/*.d.tjs',
 ];
 const tsAndJsFiles = [...jsFiles, ...tsFiles, ...tsDeclarationFiles];
+const testFiles = [
+  'test/**/*.js',
+  'test/**/*.ts',
+  'test/**/*.tsx',
+  'test/**/*.tjs',
+  '**/*.test.js',
+  '**/*.test.ts',
+  '**/*.test.tsx',
+  '**/*.test.tjs',
+];
 
 //////////////////////////////////////
 
@@ -134,6 +145,22 @@ function defineTsAndJsConfig(
         defineLicenseHeaderConfig(options),
         tsAndJsOverridesConfig,
         options.tsAndJsConfigs,
+      ],
+    },
+    {
+      name: 'ckwalsh/ts/tests',
+      files: testFiles,
+      extends: [
+        {
+          languageOptions: {
+            globals: globals.node,
+            parserOptions: {
+              projectService: {
+                defaultProject: 'tsconfig.jest.json',
+              },
+            },
+          },
+        },
       ],
     },
     {
