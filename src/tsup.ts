@@ -54,15 +54,22 @@ function extendConfigForPlatform(options: Options, platform: string): Options {
 
 type ExportPath = '.' | `./${string}`;
 interface ExportSpec {
-  source?: string;
+  '.'?: never;
+  'source'?: string;
+}
+
+interface ExportMap extends Record<ExportPath, string | ExportSpec> {
+  '.': string | ExportSpec;
+  'source'?: never;
 }
 
 interface Pkg {
-  exports: string | Record<ExportPath, string | ExportSpec>;
+  exports: string | ExportSpec | ExportMap;
+  bin?: Record<string, string>;
 }
 
 export function defineConfig(
-  pkg: Pkg,
+  { exports, bin }: Pkg,
   options: Options = {},
   platforms: Record<string, boolean | Options> = {},
 ): Options[] {
@@ -70,15 +77,27 @@ export function defineConfig(
 
   const entry: string[] = [];
 
-  if (typeof pkg.exports !== 'string') {
-    for (const spec of Object.values(pkg.exports)) {
-      if (typeof spec === 'string') {
-        continue;
+  if (typeof exports !== 'string') {
+    if (exports['.'] === undefined) {
+      if (exports.source !== undefined) {
+        entry.push(exports.source);
       }
+    } else {
+      for (const spec of Object.values(exports) as (string | ExportSpec)[]) {
+        if (typeof spec === 'string') {
+          continue;
+        }
 
-      if (spec.source) {
-        entry.push(spec.source);
+        if (spec.source) {
+          entry.push(spec.source);
+        }
       }
+    }
+  }
+
+  if (bin !== undefined) {
+    for (const binName of Object.keys(bin)) {
+      entry.push(`./bin/${binName}.ts`);
     }
   }
 
