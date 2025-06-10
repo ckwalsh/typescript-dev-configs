@@ -1,4 +1,5 @@
 {
+  "exclude": ["./test/**/*.ts", "./**/*.test.ts"],
   "compilerOptions": {
     // Typechecking
     "strict": true,
