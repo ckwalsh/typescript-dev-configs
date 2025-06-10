@@ -64,34 +64,34 @@
     }
   },
   "dependencies": {
-    "@eslint/js": "^9.27.0",
-    "@tsconfig/node24": "^24.0.1",
-    "@types/node": "^22.15.30",
-    "eslint-config-prettier": "^10.1.2",
-    "eslint-import-resolver-typescript": "^4.3.4",
+    "@eslint/js": "^9.28.0",
+    "@tsconfig/recommended": "^1.0.8",
+    "@types/node": "^22.15.31",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-import-resolver-typescript": "^4.4.3",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-import-x": "^4.11.0",
+    "eslint-plugin-import-x": "^4.15.1",
     "eslint-plugin-license-header": "^0.8.0",
-    "eslint-plugin-prettier": "^5.4.0",
-    "globals": "^16.0.0",
-    "ts-jest": "^29.3.2",
-    "tsup": "^8.4.0",
-    "typescript-eslint": "^8.33.1"
+    "eslint-plugin-prettier": "^5.4.1",
+    "globals": "^16.2.0",
+    "ts-jest": "^29.3.4",
+    "tsup": "^8.5.0",
+    "typescript-eslint": "^8.34.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.18.1",
+    "@arethetypeswrong/cli": "^0.18.2",
     "@jest/globals": "^29.7.0",
     "@trivago/prettier-plugin-sort-imports": "github:ckwalsh/prettier-plugin-sort-imports",
     "eslint": "^9.28.0",
     "husky": "^9.1.7",
     "jest": "^29.7.0",
-    "knip": "^5.54.1",
+    "knip": "^5.60.2",
     "lint-staged": "^16.1.0",
     "prettier": "^3.5.3",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
     "@tsconfig/node24": "^24.0.1",
-    "@types/node": "^22.15.30"
+    "@types/node": "^24.0.0"
   }
 }

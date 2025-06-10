@@ -11,10 +11,18 @@ import { flatConfigs as importPluginFlatConfigs } from 'eslint-plugin-import-x';
 import licenseHeaderPlugin from 'eslint-plugin-license-header';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
-import tseslint, { configs as tseslintConfigs } from 'typescript-eslint';
+import {
+  config as tseslintConfig,
+  configs as tseslintConfigs,
+} from 'typescript-eslint';
+import type {
+  Config,
+  ConfigWithExtends,
+  InfiniteDepthConfigWithExtends,
+} from 'typescript-eslint';
 
 export interface Options {
-  tsAndJsConfigs: tseslint.InfiniteDepthConfigWithExtends[];
+  tsAndJsConfigs: InfiniteDepthConfigWithExtends[];
   licenseHeader: false | string[];
   licenseHeaderIgnores: string[];
 }
@@ -46,14 +54,14 @@ const tsAndJsFiles = [...jsFiles, ...tsFiles, ...tsDeclarationFiles];
 
 //////////////////////////////////////
 
-const ignoreConfig: tseslint.ConfigWithExtends = {
+const ignoreConfig: ConfigWithExtends = {
   name: 'ckwalsh/ignoreConfig',
   ignores: ['coverage/', 'dist/'],
 };
 
 //////////////////////////////////////
 
-const tsAndJsOverridesConfig: tseslint.InfiniteDepthConfigWithExtends = {
+const tsAndJsOverridesConfig: InfiniteDepthConfigWithExtends = {
   name: 'ckwalsh/tsAndJs/overrides',
   rules: {
     '@typescript-eslint/consistent-type-imports': [
@@ -81,7 +89,7 @@ const tsAndJsOverridesConfig: tseslint.InfiniteDepthConfigWithExtends = {
 
 function defineLicenseHeaderConfig(
   options: Options,
-): tseslint.InfiniteDepthConfigWithExtends {
+): InfiniteDepthConfigWithExtends {
   if (options.licenseHeader === false) {
     return [];
   }
@@ -98,7 +106,7 @@ function defineLicenseHeaderConfig(
 
 function defineTsAndJsConfig(
   options: Options,
-): tseslint.InfiniteDepthConfigWithExtends[] {
+): InfiniteDepthConfigWithExtends[] {
   return [
     {
       name: 'ckwalsh/tsAndJs',
@@ -143,10 +151,10 @@ function defineTsAndJsConfig(
 
 //////////////////////////////////////
 
-export function defineConfig(options: Partial<Options> = {}): tseslint.Config {
+export function defineConfig(options: Partial<Options> = {}): Config {
   const resolvedOptions: Options = { ...defaultOptions, ...options };
 
   const tsAndJsConfig = defineTsAndJsConfig(resolvedOptions);
 
-  return tseslint.config(ignoreConfig, ...tsAndJsConfig);
+  return tseslintConfig(ignoreConfig, ...tsAndJsConfig);
 }
