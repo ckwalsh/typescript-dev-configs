@@ -1,7 +1,5 @@
 {
   "extends": ["@tsconfig/node24/tsconfig.json", "./tsconfig.common.json"],
-  "exclude": [],
-  "include": ["./test/**/*.ts", "./**/*.test.ts"],
   "compilerOptions": {
     "types": ["jest", "node"]
   }
