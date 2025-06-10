@@ -46,6 +46,7 @@
     },
     "./tsconfig.json": "./tsconfigs/tsconfig.json",
     "./tsconfig.browser.json": "./tsconfigs/tsconfig.browser.json",
+    "./tsconfig.jest.json": "./tsconfigs/tsconfig.jest.json",
     "./tsconfig.node.json": "./tsconfigs/tsconfig.node.json"
   },
   "module": "./dist/index.js",
@@ -66,7 +67,7 @@
   "dependencies": {
     "@eslint/js": "^9.28.0",
     "@tsconfig/recommended": "^1.0.8",
-    "@types/node": "^22.15.31",
+    "@types/node": "^24.0.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-import-resolver-typescript": "^4.4.3",
     "eslint-plugin-import": "^2.31.0",
@@ -92,6 +93,7 @@
   },
   "peerDependencies": {
     "@tsconfig/node24": "^24.0.1",
+    "@types/jest": "^29.5.14",
     "@types/node": "^24.0.0"
   }
 }
