@@ -9,17 +9,17 @@ import type { Config } from 'jest';
 import { createDefaultEsmPreset } from 'ts-jest';
 
 const presetConfig = createDefaultEsmPreset({
-  coverageProvider: 'v8',
-  collectCoverage: true,
-  moduleNameMapper: {
-    '^(\\.\\.?\\/.+)\\.js$': '$1',
-  },
   tsconfig: 'tsconfig.jest.json',
 });
 
 export function defineConfig(config: Partial<Config> = {}): Config {
   return {
     ...presetConfig,
+    coverageProvider: 'v8',
+    collectCoverage: true,
+    moduleNameMapper: {
+      '^(\\.\\.?\\/.+)\\.js$': '$1',
+    },
     ...config,
   };
 }
