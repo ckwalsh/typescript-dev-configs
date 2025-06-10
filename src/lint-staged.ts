@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { Configuration, FunctionTask } from 'lint-staged';
+import type { Configuration } from 'lint-staged';
 
-export function defineConfig(
-  config: Exclude<Configuration, FunctionTask> = {},
-): Configuration {
+type FixedConfig = Exclude<Configuration, (...args: never[]) => unknown>;
+
+export function defineConfig(config: FixedConfig = {}): Configuration {
   return {
     '*.{js,jsx,ts,tsx}': [
       'pnpm run lint-fix',
