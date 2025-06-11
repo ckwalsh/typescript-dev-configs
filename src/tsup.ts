@@ -64,18 +64,16 @@ interface ExportMap extends Record<ExportPath, string | ExportSpec> {
 }
 
 interface Pkg {
-  exports: string | ExportSpec | ExportMap;
+  exports?: string | ExportSpec | ExportMap;
   bin?: Record<string, string>;
 }
 
-export function defineConfig(
-  { exports, bin }: Pkg,
-  options: Options = {},
-  platforms: Record<string, boolean | Options> = {},
-): Options[] {
-  const configs: Options[] = [];
-
+function getEntryPointsFromExports({ exports }: Pkg): string[] {
   const entry: string[] = [];
+
+  if (exports === undefined || typeof exports === 'string') {
+    return entry;
+  }
 
   if (typeof exports !== 'string') {
     if (exports['.'] === undefined) {
@@ -95,11 +93,34 @@ export function defineConfig(
     }
   }
 
-  if (bin !== undefined) {
-    for (const binName of Object.keys(bin)) {
-      entry.push(`./bin/${binName}.ts`);
-    }
+  return entry;
+}
+
+function getEntryPointsFromBinaries({ bin }: Pkg): string[] {
+  const entry: string[] = [];
+
+  if (bin === undefined) {
+    return entry;
   }
+
+  for (const binName of Object.keys(bin)) {
+    entry.push(`./bin/${binName}.ts`);
+  }
+
+  return entry;
+}
+
+export function defineConfig(
+  pkg: Pkg,
+  options: Options = {},
+  platforms: Record<string, boolean | Options> = {},
+): Options[] {
+  const configs: Options[] = [];
+
+  const entry: string[] = [
+    getEntryPointsFromExports(pkg),
+    getEntryPointsFromBinaries(pkg),
+  ].flat();
 
   const derivedOptions: Options = { entry, ...options };
 
