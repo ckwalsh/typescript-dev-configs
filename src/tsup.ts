@@ -15,7 +15,7 @@ const DEFAULTS: ReturnOptions = {
   minify: IS_PRODUCTION,
   outDir: 'dist',
   dts: true,
-  sourcemap: !IS_PRODUCTION,
+  sourcemap: true,
   format: ['cjs', 'esm'],
   replaceNodeEnv: IS_PRODUCTION,
 };
