@@ -18,6 +18,7 @@ const DEFAULTS: ReturnOptions = {
   sourcemap: true,
   format: ['cjs', 'esm'],
   replaceNodeEnv: IS_PRODUCTION,
+  metafile: true,
 };
 
 const PLATFORM_DEFAULTS: Record<string, Options> = {

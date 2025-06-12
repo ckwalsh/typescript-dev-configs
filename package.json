@@ -16,6 +16,7 @@
   "type": "module",
   "files": [
     "dist",
+    "!dist/**/metafile*.json",
     "tsconfigs",
     "README.md",
     "LICENSE"
