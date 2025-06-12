@@ -55,9 +55,16 @@ const tsAndJsFiles = [...jsFiles, ...tsFiles, ...tsDeclarationFiles];
 
 //////////////////////////////////////
 
+const ignoreDirs = ['coverage', 'dist', 'docs'];
+
 const ignoreConfig: ConfigWithExtends = {
   name: 'ckwalsh/ignoreConfig',
-  ignores: ['coverage/', 'dist/'],
+  ignores: [
+    // Direct
+    ...ignoreDirs.map((dir) => `./${dir}`),
+    // Monorepo
+    ...ignoreDirs.map((dir) => `./packages/*/${dir}`),
+  ],
 };
 
 //////////////////////////////////////
