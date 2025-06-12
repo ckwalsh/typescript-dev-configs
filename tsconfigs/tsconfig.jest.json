@@ -1,8 +1,0 @@
-{
-  "extends": ["@tsconfig/node24/tsconfig.json", "./tsconfig.common.json"],
-  "compilerOptions": {
-    "types": ["jest", "node"],
-    "composite": true,
-    "noEmit": false
-  }
-}

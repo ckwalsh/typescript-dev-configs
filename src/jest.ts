@@ -13,8 +13,17 @@ const presetConfig = createDefaultEsmPreset({});
 export function defineConfig(config: Partial<Config> = {}): Config {
   return {
     ...presetConfig,
+    coveragePathIgnorePatterns: ['/node_modules/', '/test/'],
     coverageProvider: 'v8',
     collectCoverage: true,
+    coverageThreshold: {
+      global: {
+        branches: 80,
+        functions: 80,
+        lines: 80,
+        statements: 80,
+      },
+    },
     moduleNameMapper: {
       '^(\\.\\.?\\/.+)\\.js$': '$1',
     },
