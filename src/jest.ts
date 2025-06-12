@@ -8,9 +8,7 @@
 import type { Config } from 'jest';
 import { createDefaultEsmPreset } from 'ts-jest';
 
-const presetConfig = createDefaultEsmPreset({
-  tsconfig: 'tsconfig.jest.json',
-});
+const presetConfig = createDefaultEsmPreset({});
 
 export function defineConfig(config: Partial<Config> = {}): Config {
   return {

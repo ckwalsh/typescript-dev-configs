@@ -46,7 +46,6 @@
     },
     "./tsconfig.json": "./tsconfigs/tsconfig.json",
     "./tsconfig.browser.json": "./tsconfigs/tsconfig.browser.json",
-    "./tsconfig.jest.json": "./tsconfigs/tsconfig.jest.json",
     "./tsconfig.node.json": "./tsconfigs/tsconfig.node.json"
   },
   "module": "./dist/index.js",
