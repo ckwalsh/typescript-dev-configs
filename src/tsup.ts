@@ -5,7 +5,30 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import path from 'path';
 import type { Options } from 'tsup';
+
+type ExportPath = '.' | `./${string}`;
+interface ExportSpec {
+  '.'?: never;
+  'source'?: string;
+}
+
+interface ExportMap extends Record<ExportPath, string | ExportSpec> {
+  '.': string | ExportSpec;
+  'source'?: never;
+}
+
+interface Pkg {
+  exports?: string | ExportSpec | ExportMap;
+  bin?: Record<string, string>;
+}
+
+interface HelperOptions {
+  rootDir: string;
+  pkg: Pkg;
+  platforms?: Record<string, boolean | Options>;
+}
 
 type ReturnOptions = Options & Required<Pick<Options, 'outDir'>>;
 
@@ -36,12 +59,15 @@ function isTsupPlatform(platform: string): platform is Platform {
   return ['neutral', 'node', 'browser'].includes(platform);
 }
 
-function extendConfigForPlatform(options: Options, platform: string): Options {
+function extendConfigForPlatform(
+  options: Options & HelperOptions,
+  platform: string,
+): Options {
   const config = {
     name: platform,
     tsconfig: `tsconfig.${platform}.json`,
     ...DEFAULTS,
-    outDir: `${DEFAULTS.outDir}/${platform}`,
+    outDir: path.join(options.rootDir, DEFAULTS.outDir, platform),
     ...PLATFORM_DEFAULTS[platform],
     ...options,
   };
@@ -53,23 +79,10 @@ function extendConfigForPlatform(options: Options, platform: string): Options {
   return config;
 }
 
-type ExportPath = '.' | `./${string}`;
-interface ExportSpec {
-  '.'?: never;
-  'source'?: string;
-}
-
-interface ExportMap extends Record<ExportPath, string | ExportSpec> {
-  '.': string | ExportSpec;
-  'source'?: never;
-}
-
-interface Pkg {
-  exports?: string | ExportSpec | ExportMap;
-  bin?: Record<string, string>;
-}
-
-function getEntryPointsFromExports({ exports }: Pkg): string[] {
+function getEntryPointsFromExports(
+  rootDir: string,
+  exports: Pkg['exports'],
+): string[] {
   const entry: string[] = [];
 
   if (exports === undefined || typeof exports === 'string') {
@@ -79,7 +92,7 @@ function getEntryPointsFromExports({ exports }: Pkg): string[] {
   if (typeof exports !== 'string') {
     if (exports['.'] === undefined) {
       if (exports.source !== undefined) {
-        entry.push(exports.source);
+        entry.push(path.join(rootDir, exports.source));
       }
     } else {
       for (const spec of Object.values(exports) as (string | ExportSpec)[]) {
@@ -88,7 +101,7 @@ function getEntryPointsFromExports({ exports }: Pkg): string[] {
         }
 
         if (spec.source) {
-          entry.push(spec.source);
+          entry.push(path.join(rootDir, spec.source));
         }
       }
     }
@@ -97,7 +110,10 @@ function getEntryPointsFromExports({ exports }: Pkg): string[] {
   return entry;
 }
 
-function getEntryPointsFromBinaries({ bin }: Pkg): string[] {
+function getEntryPointsFromBinaries(
+  rootDir: string,
+  bin: Pkg['bin'],
+): string[] {
   const entry: string[] = [];
 
   if (bin === undefined) {
@@ -105,27 +121,28 @@ function getEntryPointsFromBinaries({ bin }: Pkg): string[] {
   }
 
   for (const binName of Object.keys(bin)) {
-    entry.push(`./bin/${binName}.ts`);
+    entry.push(path.join(rootDir, 'bin', `${binName}.ts`));
   }
 
   return entry;
 }
 
-export function defineConfig(
-  pkg: Pkg,
-  options: Options = {},
-  platforms: Record<string, boolean | Options> = {},
-): Options[] {
+export function defineConfig(options: Options & HelperOptions): Options[] {
   const configs: Options[] = [];
 
+  const { rootDir, pkg } = options;
+  const { exports, bin } = pkg;
+
   const entry: string[] = [
-    getEntryPointsFromExports(pkg),
-    getEntryPointsFromBinaries(pkg),
+    getEntryPointsFromExports(rootDir, exports),
+    getEntryPointsFromBinaries(rootDir, bin),
   ].flat();
 
-  const derivedOptions: Options = { entry, ...options };
+  const derivedOptions: Options & HelperOptions = { entry, ...options };
 
-  for (const [platform, platformOptions] of Object.entries(platforms)) {
+  for (const [platform, platformOptions] of Object.entries(
+    options.platforms ?? {},
+  )) {
     if (platformOptions === false) {
       continue;
     }

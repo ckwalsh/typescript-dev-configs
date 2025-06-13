@@ -8,6 +8,10 @@
 import pkg from './package.json' with { type: 'json' };
 import * as tsup from './src/tsup.ts';
 
-const config = tsup.defineConfig(pkg, { replaceNodeEnv: false });
+const config = tsup.defineConfig({
+  rootDir: import.meta.dirname,
+  pkg,
+  replaceNodeEnv: false,
+});
 
 export default config;

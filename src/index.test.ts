@@ -27,5 +27,34 @@ test('prettier', () => {
 });
 
 test('tsup', () => {
-  expect(() => tsup.defineConfig(pkg)).not.toThrow();
+  expect(() => tsup.defineConfig({ rootDir: '.', pkg })).not.toThrow();
+});
+
+test('tsup with bin', () => {
+  expect(() =>
+    tsup.defineConfig({
+      rootDir: '.',
+      pkg: {
+        ...pkg,
+        bin: {
+          foo: 'dist/foo.js',
+          bar: 'dist/bar.js',
+        },
+      },
+    }),
+  ).not.toThrow();
+});
+
+test('tsup with platforms', () => {
+  expect(() =>
+    tsup.defineConfig({
+      rootDir: '.',
+      pkg,
+      platforms: {
+        foo: true,
+        neutral: true,
+        node: true,
+      },
+    }),
+  ).not.toThrow();
 });
