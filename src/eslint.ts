@@ -152,7 +152,9 @@ function defineTsAndJsConfig(
     {
       name: 'ckwalsh/tsAndJs/prettier',
       files: tsAndJsFiles,
-      extends: [eslintPluginPrettierRecommended],
+      extends: [
+        eslintPluginPrettierRecommended as InfiniteDepthConfigWithExtends,
+      ],
     },
   ];
 }
