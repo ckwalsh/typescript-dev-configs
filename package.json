@@ -41,22 +41,22 @@
     ".": {
       "source": "./src/index.ts",
       "import": {
-        "types": "./dist/src/index.d.ts",
-        "import": "./dist/src/index.js"
+        "types": "./dist/default/index.d.ts",
+        "import": "./dist/default/index.js"
       },
       "require": {
-        "types": "./dist/src/index.d.cts",
-        "require": "./dist/src/index.cjs"
+        "types": "./dist/default/index.d.cts",
+        "require": "./dist/default/index.cjs"
       }
     },
     "./tsconfig.neutral.json": "./tsconfigs/tsconfig.neutral.json",
     "./tsconfig.browser.json": "./tsconfigs/tsconfig.browser.json",
     "./tsconfig.node.json": "./tsconfigs/tsconfig.node.json"
   },
-  "module": "./dist/src/index.js",
-  "types": "./dist/src/index.d.ts",
+  "module": "./dist/default/index.js",
+  "types": "./dist/default/index.d.ts",
   "directories": {
-    "lib": "dist/src/"
+    "lib": "dist/default/"
   },
   "engines": {
     "node": ">=18.0.0"
