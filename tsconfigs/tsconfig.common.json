@@ -18,6 +18,9 @@
     // Interop Contraints
     "isolatedModules": true,
     // Language and Environment
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    // Projects
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo"
   }
 }
