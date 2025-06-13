@@ -97,9 +97,8 @@
   },
   "peerDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
-    "@tsconfig/node20": "^20.0.0",
+    "@tsconfig/node20": "^20.1.5",
     "@tsconfig/recommended": "^1.0.0",
-    "@types/jest": "^29.5.14",
-    "@types/node": "^24.0.0"
+    "@types/node": "^20.19.0"
   }
 }
