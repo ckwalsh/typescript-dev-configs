@@ -22,7 +22,7 @@
     "LICENSE"
   ],
   "bin": {
-    "pnpm-pack-and-attw": "./bin/pnpm-pack-and-attw.js"
+    "pnpm-pack-and-attw": "./dist/bin/pnpm-pack-and-attw.cjs"
   },
   "scripts": {
     "attw": "HUSKY=0 pnpm pack --out node_modules/.cache/attw/pack.tgz && (attw --quiet node_modules/.cache/attw/pack.tgz || attw node_modules/.cache/attw/pack.tgz)",
