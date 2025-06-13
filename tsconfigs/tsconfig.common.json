@@ -9,7 +9,7 @@
     "noUncheckedIndexedAccess": true,
     // Modules
     "allowImportingTsExtensions": true,
-    "customConditions": ["source"],
+    //"customConditions": ["source"],
     "noUncheckedSideEffectImports": true,
     "rewriteRelativeImportExtensions": true,
     "resolveJsonModule": true,
