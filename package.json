@@ -94,12 +94,5 @@
     "lint-staged": "^16.1.0",
     "prettier": "^3.5.3",
     "typescript": "^5.8.3"
-  },
-  "peerDependencies": {
-    "@arethetypeswrong/cli": "^0.18.2",
-    "@ckwalsh/prettier-plugin-sort-imports": "^5.2.3",
-    "@tsconfig/node20": "^20.1.5",
-    "@tsconfig/recommended": "^1.0.0",
-    "@types/node": "^20.19.0"
   }
 }
