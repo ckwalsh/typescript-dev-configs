@@ -5,11 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import pkg from './package.json' with { type: 'json' };
 import * as tsup from './src/tsup.ts';
 
+const rootDir = dirname(fileURLToPath(import.meta.url));
+
 const config = tsup.defineConfig({
-  rootDir: import.meta.dirname,
+  rootDir,
   pkg,
   replaceNodeEnv: false,
 });
