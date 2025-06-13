@@ -2,7 +2,7 @@
   "extends": ["./tsconfigs/tsconfig.node.json"],
   "include": ["./bin", "./src", "tsup.config.ts"],
   "compilerOptions": {
-    "incremental": true,
+    "incremental": false,
     "tsBuildInfoFile": "tsconfig.tsbuildinfo"
   }
 }
