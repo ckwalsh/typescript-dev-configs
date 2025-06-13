@@ -3,6 +3,6 @@
   "include": ["./bin", "./src", "tsup.config.ts"],
   "compilerOptions": {
     "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "tsBuildInfoFile": "tsconfig.tsbuildinfo"
   }
 }
