@@ -86,7 +86,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
     "@jest/globals": "^30.0.0",
-    "@trivago/prettier-plugin-sort-imports": "github:ckwalsh/prettier-plugin-sort-imports",
+    "@ckwalsh/prettier-plugin-sort-imports": "^5.2.3",
     "eslint": "^9.28.0",
     "husky": "^9.1.7",
     "jest": "^30.0.0",
@@ -97,6 +97,7 @@
   },
   "peerDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
+    "@ckwalsh/prettier-plugin-sort-imports": "^5.2.3",
     "@tsconfig/node20": "^20.1.5",
     "@tsconfig/recommended": "^1.0.0",
     "@types/node": "^20.19.0"

@@ -24,7 +24,7 @@ export function defineConfig(config: Config): Config {
     endOfLine: 'lf',
     embeddedLanguageFormatting: 'auto',
     singleAttributePerLine: true,
-    plugins: ['@trivago/prettier-plugin-sort-imports'],
+    plugins: ['@ckwalsh/prettier-plugin-sort-imports'],
     // @trivago/prettier-plugin-sort-imports
     importOrder: ['^@ckwalsh/(.*)$', '^[./]'],
     importOrderSeparation: true,
