@@ -133,6 +133,10 @@ function run(packedPath: string): Promise<number> {
   return new Promise((resolve) => {
     const result = childProcess.spawn('attw', [packedPath, ...passthruArgs], {
       stdio: 'inherit',
+      env: {
+        ...process.env,
+        HUSKY: '0', // Disable Husky hooks during pack
+      },
     });
     result.on('exit', resolve);
 
