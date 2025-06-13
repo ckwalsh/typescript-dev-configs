@@ -30,18 +30,27 @@ interface HelperOptions {
   platforms?: Record<string, boolean | Options>;
 }
 
-type ReturnOptions = Options & Required<Pick<Options, 'outDir'>>;
+const DEFAULT_OUT_DIR = 'dist';
 
-const IS_PRODUCTION = process.env['NODE_ENV'] !== 'development';
-
-const DEFAULTS: ReturnOptions = {
-  minify: IS_PRODUCTION,
-  outDir: 'dist',
+const DEFAULTS: Options = {
   dts: true,
   sourcemap: true,
   format: ['cjs', 'esm'],
-  replaceNodeEnv: IS_PRODUCTION,
   metafile: true,
+};
+
+const IS_PRODUCTION = process.env['NODE_ENV'] !== 'development';
+
+const PRODUCTION_DEFAULTS: Options = {
+  minify: true,
+  replaceNodeEnv: true,
+};
+
+const IS_COMMIT = !!process.env['COMMIT'];
+
+const COMMIT_DEFAULTS: Options = {
+  clean: true,
+  silent: true,
 };
 
 const PLATFORM_DEFAULTS: Record<string, Options> = {
@@ -67,8 +76,10 @@ function extendConfigForPlatform(
     name: platform,
     tsconfig: `tsconfig.${platform}.json`,
     ...DEFAULTS,
-    outDir: path.join(options.rootDir, DEFAULTS.outDir, platform),
+    ...(IS_PRODUCTION ? PRODUCTION_DEFAULTS : {}),
+    ...(IS_COMMIT ? COMMIT_DEFAULTS : {}),
     ...PLATFORM_DEFAULTS[platform],
+    outDir: path.join(options.rootDir, DEFAULT_OUT_DIR, platform),
     ...options,
   };
 
@@ -160,6 +171,9 @@ export function defineConfig(options: Options & HelperOptions): Options[] {
   if (configs.length === 0) {
     configs.push({
       ...DEFAULTS,
+      ...(IS_PRODUCTION ? PRODUCTION_DEFAULTS : {}),
+      ...(IS_COMMIT ? COMMIT_DEFAULTS : {}),
+      outDir: path.join(options.rootDir, DEFAULT_OUT_DIR),
       ...derivedOptions,
     });
   }

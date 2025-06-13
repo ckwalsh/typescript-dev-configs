@@ -21,38 +21,42 @@
     "README.md",
     "LICENSE"
   ],
+  "bin": {
+    "pnpm-pack-and-attw": "./bin/pnpm-pack-and-attw.js"
+  },
   "scripts": {
-    "attw": "pnpm pack --out attw.tgz && attw --quiet attw.tgz || attw attw.tgz",
-    "build": "tsup --silent",
-    "build-watch": "tsup --watch",
+    "attw": "pnpm pack --out node_modules/.cache/attw/pack.tgz && attw node_modules/.cache/attw/pack.tgz",
+    "build": "tsup",
+    "build:watch": "tsup --watch",
     "knip": "knip",
     "lint": "eslint --cache",
-    "lint-fix": "eslint --cache --fix",
-    "lint-staged": "lint-staged",
-    "prepare": "husky && pnpm run build",
-    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
-    "typecheck": "tsc --noEmit"
+    "lint:fix": "eslint --cache --fix",
+    "lint-staged": "if [ -n \"${HG}\" ]; then lint-staged --no-stash --diff HEAD; else lint-staged; fi;",
+    "test": "node --experimental-vm-modules --disable-warning=ExperimentalWarning ./node_modules/jest/bin/jest.js",
+    "tsc": "tsc --noEmit",
+    "tsc:watch": "tsc --noEmit --watch",
+    "prepare": "husky && tsup --silent --clean"
   },
   "exports": {
     ".": {
       "source": "./src/index.ts",
       "import": {
-        "types": "./dist/index.d.ts",
-        "import": "./dist/index.js"
+        "types": "./dist/src/index.d.ts",
+        "import": "./dist/src/index.js"
       },
       "require": {
-        "types": "./dist/index.d.cts",
-        "require": "./dist/index.cjs"
+        "types": "./dist/src/index.d.cts",
+        "require": "./dist/src/index.cjs"
       }
     },
     "./tsconfig.neutral.json": "./tsconfigs/tsconfig.neutral.json",
     "./tsconfig.browser.json": "./tsconfigs/tsconfig.browser.json",
     "./tsconfig.node.json": "./tsconfigs/tsconfig.node.json"
   },
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "module": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
   "directories": {
-    "lib": "dist"
+    "lib": "dist/src/"
   },
   "engines": {
     "node": ">=18.0.0"

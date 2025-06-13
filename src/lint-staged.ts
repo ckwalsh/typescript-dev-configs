@@ -12,7 +12,7 @@ type FixedConfig = Exclude<Configuration, (...args: never[]) => unknown>;
 export function defineConfig(config: FixedConfig = {}): Configuration {
   return {
     '*.{js,jsx,ts,tsx}': [
-      'pnpm run lint-fix',
+      'pnpm run lint:fix',
       'pnpm run test --passWithNoTests',
     ],
     ...config,

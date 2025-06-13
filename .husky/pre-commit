@@ -1,6 +1,5 @@
-pnpm run typecheck
-pnpm run build --clean
-# This helps lint-staged work under git and sapling
-if [ -n "${HG}" ]; then pnpm run lint-staged --no-stash --diff HEAD; else pnpm run lint-staged; fi;
+pnpm run tsc
+pnpm run build
+pnpm run lint-staged
 pnpm run knip
 pnpm run attw
