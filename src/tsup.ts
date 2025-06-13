@@ -27,33 +27,48 @@ interface Pkg {
 interface HelperOptions {
   rootDir: string;
   pkg: Pkg;
-  platforms?: Record<string, boolean | Options>;
+  platforms?: Record<string, true | Options>;
 }
 
-const DEFAULT_OUT_DIR = 'dist';
+const NODE_ENV_DEFAULTS: Options =
+  process.env['NODE_ENV'] === 'development'
+    ? {}
+    : {
+        minify: true,
+        replaceNodeEnv: true,
+      };
 
-const DEFAULTS: Options = {
+const COMMIT_DEFAULTS: Options = process.env['COMMIT']
+  ? {
+      clean: true,
+      silent: true,
+    }
+  : {};
+
+const ENV_DEFAULTS = {
+  ...NODE_ENV_DEFAULTS,
+  ...COMMIT_DEFAULTS,
+};
+
+const EXPORT_DEFAULTS: Options = {
   dts: true,
   sourcemap: true,
   format: ['cjs', 'esm'],
   metafile: true,
+  ...ENV_DEFAULTS,
 };
 
-const IS_PRODUCTION = process.env['NODE_ENV'] !== 'development';
-
-const PRODUCTION_DEFAULTS: Options = {
-  minify: true,
-  replaceNodeEnv: true,
+const BIN_DEFAULTS: Options = {
+  dts: false,
+  sourcemap: true,
+  format: ['cjs'],
+  metafile: true,
+  ...ENV_DEFAULTS,
 };
 
-const IS_COMMIT = !!process.env['COMMIT'];
+const ROOT_OUT_DIR = 'dist';
 
-const COMMIT_DEFAULTS: Options = {
-  clean: true,
-  silent: true,
-};
-
-const PLATFORM_DEFAULTS: Record<string, Options> = {
+const DEFAULTS_BY_PLATFORM: Record<string, Options> = {
   node: {
     removeNodeProtocol: false,
   },
@@ -68,115 +83,86 @@ function isTsupPlatform(platform: string): platform is Platform {
   return ['neutral', 'node', 'browser'].includes(platform);
 }
 
-function extendConfigForPlatform(
-  options: Options & HelperOptions,
-  platform: string,
-): Options {
-  const config = {
-    name: platform,
-    tsconfig: `tsconfig.${platform}.json`,
-    ...DEFAULTS,
-    ...(IS_PRODUCTION ? PRODUCTION_DEFAULTS : {}),
-    ...(IS_COMMIT ? COMMIT_DEFAULTS : {}),
-    ...PLATFORM_DEFAULTS[platform],
-    outDir: path.join(options.rootDir, DEFAULT_OUT_DIR, platform),
-    ...options,
-  };
-
-  if (isTsupPlatform(platform)) {
-    config.platform = platform;
-  }
-
-  return config;
-}
-
-function getEntryPointsFromExports(
-  rootDir: string,
-  exports: Pkg['exports'],
-): string[] {
-  const entry: string[] = [];
+function defineExportConfigs(options: Options & HelperOptions): Options[] {
+  const { rootDir, pkg } = options;
+  const { exports } = pkg;
 
   if (exports === undefined || typeof exports === 'string') {
-    return entry;
+    return [];
   }
 
-  if (typeof exports !== 'string') {
-    if (exports['.'] === undefined) {
-      if (exports.source !== undefined) {
-        entry.push(path.join(rootDir, exports.source));
-      }
-    } else {
-      for (const spec of Object.values(exports) as (string | ExportSpec)[]) {
-        if (typeof spec === 'string') {
-          continue;
-        }
+  const entry: string[] = [];
 
-        if (spec.source) {
-          entry.push(path.join(rootDir, spec.source));
-        }
+  if (exports['.'] === undefined) {
+    if (exports.source !== undefined) {
+      entry.push(path.join(rootDir, exports.source));
+    }
+  } else {
+    for (const spec of Object.values(exports) as (string | ExportSpec)[]) {
+      if (typeof spec === 'string') {
+        continue;
+      }
+
+      if (spec.source) {
+        entry.push(path.join(rootDir, spec.source));
       }
     }
   }
 
-  return entry;
+  const platforms = options.platforms ?? { default: true };
+
+  return Object.entries(platforms).map(
+    ([name, platformOptions]: [string, true | Options]): Options => {
+      const tsconfig =
+        name === 'default' ? 'tsconfig.json' : `tsconfig.${name}.json`;
+
+      const platformDefaults = DEFAULTS_BY_PLATFORM[name] ?? {};
+      if (isTsupPlatform(name)) {
+        platformDefaults.platform = name;
+      }
+
+      if (platformOptions === true) {
+        platformOptions = {};
+      }
+
+      return {
+        ...EXPORT_DEFAULTS,
+        name: name,
+        tsconfig,
+        outDir: path.join(rootDir, ROOT_OUT_DIR, name),
+        entry,
+        ...options,
+        ...platformOptions,
+      };
+    },
+  );
 }
 
-function getEntryPointsFromBinaries(
-  rootDir: string,
-  bin: Pkg['bin'],
-): string[] {
+function defineBinConfigs(options: Options & HelperOptions): Options[] {
+  const { rootDir, pkg } = options;
+  const { bin } = pkg;
+
+  if (bin === undefined || Object.keys(bin).length === 0) {
+    return [];
+  }
+
   const entry: string[] = [];
 
-  if (bin === undefined) {
-    return entry;
+  for (const source of Object.keys(bin)) {
+    entry.push(path.join(rootDir, 'bin', `${source}.ts`));
   }
 
-  for (const binName of Object.keys(bin)) {
-    entry.push(path.join(rootDir, 'bin', `${binName}.ts`));
-  }
-
-  return entry;
+  return [
+    {
+      ...BIN_DEFAULTS,
+      name: 'binaries',
+      outDir: path.join(rootDir, ROOT_OUT_DIR, 'bin'),
+      entry,
+      ...options,
+    },
+  ];
 }
 
 export function defineConfig(options: Options & HelperOptions): Options[] {
-  const configs: Options[] = [];
-
-  const { rootDir, pkg } = options;
-  const { exports, bin } = pkg;
-
-  const entry: string[] = [
-    getEntryPointsFromExports(rootDir, exports),
-    getEntryPointsFromBinaries(rootDir, bin),
-  ].flat();
-
-  const derivedOptions: Options & HelperOptions = { entry, ...options };
-
-  for (const [platform, platformOptions] of Object.entries(
-    options.platforms ?? {},
-  )) {
-    if (platformOptions === false) {
-      continue;
-    }
-
-    configs.push(
-      extendConfigForPlatform(
-        platformOptions === true
-          ? derivedOptions
-          : { ...derivedOptions, ...platformOptions },
-        platform,
-      ),
-    );
-  }
-
-  if (configs.length === 0) {
-    configs.push({
-      ...DEFAULTS,
-      ...(IS_PRODUCTION ? PRODUCTION_DEFAULTS : {}),
-      ...(IS_COMMIT ? COMMIT_DEFAULTS : {}),
-      outDir: path.join(options.rootDir, DEFAULT_OUT_DIR),
-      ...derivedOptions,
-    });
-  }
-
-  return configs;
+  return [...defineExportConfigs(options), ...defineBinConfigs(options)];
 }
