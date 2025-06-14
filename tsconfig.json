@@ -1,8 +1,8 @@
 {
-  "extends": ["./tsconfigs/tsconfig.node.json"],
+  "extends": ["@tsconfig/node/tsconfig.json", "./tsconfigs/tsconfig.node.json"],
   "include": ["./bin", "./src", "tsup.config.ts"],
   "compilerOptions": {
-    "incremental": false,
+    "incremental": true,
     "tsBuildInfoFile": "tsconfig.tsbuildinfo"
   }
 }
