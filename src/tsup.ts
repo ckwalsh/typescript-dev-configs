@@ -30,25 +30,20 @@ interface HelperOptions {
   platforms?: Record<string, true | Options>;
 }
 
-const NODE_ENV_DEFAULTS: Options =
-  process.env['NODE_ENV'] === 'development'
-    ? {}
-    : {
-        minify: true,
-        replaceNodeEnv: true,
-      };
+const IS_CI = !!process.env['CI'];
 
-const COMMIT_DEFAULTS: Options = process.env['COMMIT']
-  ? {
-      clean: true,
-      silent: true,
-    }
-  : {};
+const NODE_ENV = (
+  process.env['NODE_ENV'] ?? (IS_CI ? 'production' : 'development')
+).toLowerCase();
 
-const ENV_DEFAULTS = {
-  ...NODE_ENV_DEFAULTS,
-  ...COMMIT_DEFAULTS,
+const NODE_ENV_OPTIONS: Record<string, Options> = {
+  production: {
+    minify: true,
+    replaceNodeEnv: true,
+  },
 };
+
+const ENV_DEFAULTS: Options = NODE_ENV_OPTIONS[NODE_ENV] ?? {};
 
 const EXPORT_DEFAULTS: Options = {
   dts: true,

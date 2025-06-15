@@ -5,166 +5,83 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import eslint from '@eslint/js';
-import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
-import { flatConfigs as importPluginFlatConfigs } from 'eslint-plugin-import-x';
-import licenseHeaderPlugin from 'eslint-plugin-license-header';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import type { Config, InfiniteDepthConfigWithExtends } from 'typescript-eslint';
+
+import { prefixConfigNames } from './eslint/base.ts';
+import type { CoreOptions } from './eslint/core.ts';
+import { coreConfig } from './eslint/core.ts';
+import { JS_FILES, TS_AND_JS_FILES } from './eslint/files.ts';
+import type { FormatOptions } from './eslint/format.ts';
+import { formatConfig } from './eslint/format.ts';
+import type { IgnoreOptions } from './eslint/ignore.ts';
+import { ignoreConfig } from './eslint/ignore.ts';
+import type { StyleOptions } from './eslint/style.ts';
+import { styleConfig } from './eslint/style.ts';
+import type { TypescriptOptions } from './eslint/typescript.ts';
 import {
-  config as tseslintConfig,
-  configs as tseslintConfigs,
-} from 'typescript-eslint';
-import type {
-  Config,
-  ConfigWithExtends,
-  InfiniteDepthConfigWithExtends,
-} from 'typescript-eslint';
+  typecheckDisableConfig,
+  typescriptConfig,
+} from './eslint/typescript.ts';
 
-export interface Options {
-  tsAndJsConfigs: InfiniteDepthConfigWithExtends[];
-  licenseHeader: false | string[];
-  licenseHeaderIgnores: string[];
+export interface SimpleOptions {
+  ignore: IgnoreOptions;
+  core: CoreOptions;
+  typescript: TypescriptOptions;
+  style: StyleOptions;
+  format: FormatOptions;
+  extraRules: Partial<ExtraRules>;
 }
 
-const defaultOptions: Options = {
-  tsAndJsConfigs: [],
-  licenseHeader: [
-    '/*',
-    ' * Copyright (c) Cullen Walsh',
-    ' *',
-    ' * This source code is licensed under the MIT license found in the',
-    ' * LICENSE file in the root directory of this source tree.',
-    ' */',
-  ],
-  licenseHeaderIgnores: ['src/vendor/**/*'],
+interface ExtraRules {
+  preIgnore: InfiniteDepthConfigWithExtends[];
+  postIgnore: InfiniteDepthConfigWithExtends[];
+  tsAndJs: InfiniteDepthConfigWithExtends[];
+  jsOnly: InfiniteDepthConfigWithExtends[];
+  preFormat: InfiniteDepthConfigWithExtends[];
+  postFormat: InfiniteDepthConfigWithExtends[];
+}
+
+const DEFAULT_OPTIONS: SimpleOptions = {
+  ignore: true,
+  core: true,
+  typescript: true,
+  style: true,
+  format: true,
+  extraRules: {},
 };
 
 //////////////////////////////////////
 
-const jsFiles = ['**/*.js', '**/*.jsx', '**/*.mjs', '**/*.cjs'];
-const tsFiles = ['**/*.ts', '**/*.tsx', '**/*.tjs', '**/*.tjs'];
+export function defineConfig(partial: Partial<SimpleOptions> = {}): Config {
+  const options: SimpleOptions = { ...DEFAULT_OPTIONS, ...partial };
 
-const tsDeclarationFiles = [
-  '**/*.d.ts',
-  '**/*.d.tsx',
-  '**/*.d.tjs',
-  '**/*.d.tjs',
-];
-const tsAndJsFiles = [...jsFiles, ...tsFiles, ...tsDeclarationFiles];
-
-//////////////////////////////////////
-
-const ignoreDirs = ['coverage', 'dist', 'docs'];
-
-const ignoreConfig: ConfigWithExtends = {
-  name: 'ckwalsh/ignoreConfig',
-  ignores: [
-    // Direct
-    ...ignoreDirs.map((dir) => `./${dir}`),
-    // Monorepo
-    ...ignoreDirs.map((dir) => `./packages/*/${dir}`),
-  ],
-};
-
-//////////////////////////////////////
-
-const tsAndJsOverridesConfig: InfiniteDepthConfigWithExtends = {
-  name: 'ckwalsh/tsAndJs/overrides',
-  rules: {
-    '@typescript-eslint/consistent-type-imports': [
-      'error',
-      {
-        disallowTypeAnnotations: true,
-        fixStyle: 'separate-type-imports',
-        prefer: 'type-imports',
-      },
-    ],
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      {
-        argsIgnorePattern: '^_',
-        caughtErrorsIgnorePattern: '^_',
-        destructuredArrayIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
-        ignoreRestSiblings: true,
-      },
-    ],
-  },
-};
-
-//////////////////////////////////////
-
-function defineLicenseHeaderConfig(
-  options: Options,
-): InfiniteDepthConfigWithExtends {
-  if (options.licenseHeader === false) {
-    return [];
-  }
-  return {
-    ignores: options.licenseHeaderIgnores,
-    plugins: {
-      'license-header': licenseHeaderPlugin,
-    },
-    rules: {
-      'license-header/header': ['error', options.licenseHeader],
-    },
-  };
-}
-
-function defineTsAndJsConfig(
-  options: Options,
-): InfiniteDepthConfigWithExtends[] {
-  return [
+  const config = tseslint.config([
+    prefixConfigNames('preIgnore', options.extraRules.preIgnore ?? []),
+    ignoreConfig(options.ignore),
+    prefixConfigNames('postIgnore', options.extraRules.postIgnore ?? []),
     {
-      name: 'ckwalsh/tsAndJs',
-      files: tsAndJsFiles,
-      extends: [
-        {
-          languageOptions: {
-            globals: globals.node,
-            parserOptions: {
-              projectService: true,
-            },
-          },
-        },
-        eslint.configs.recommended,
-        tseslintConfigs.strictTypeChecked,
-        tseslintConfigs.stylisticTypeChecked,
-        {
-          name: 'ckwalsh/tsAndJs/importPluginResolver',
-          settings: {
-            'import-x/resolver-next': [createTypeScriptImportResolver()],
-          },
-        },
-        importPluginFlatConfigs.recommended,
-        importPluginFlatConfigs.typescript,
-        defineLicenseHeaderConfig(options),
-        tsAndJsOverridesConfig,
-        options.tsAndJsConfigs,
-      ],
+      name: 'ts-and-js',
+      files: TS_AND_JS_FILES,
+      extends: tseslint.config([
+        coreConfig(options.core),
+        typescriptConfig(options.typescript),
+        styleConfig(options.style),
+        ...prefixConfigNames('extra', options.extraRules.tsAndJs ?? []),
+      ]),
     },
     {
-      name: 'ckwalsh/tsAndJs/jsTypecheckDisable',
-      files: jsFiles,
-      extends: [tseslintConfigs.disableTypeChecked],
+      name: 'js-only',
+      files: JS_FILES,
+      extends: tseslint.config([
+        typecheckDisableConfig(options.typescript),
+        ...prefixConfigNames('extra', options.extraRules.jsOnly ?? []),
+      ]),
     },
-    {
-      name: 'ckwalsh/tsAndJs/prettier',
-      files: tsAndJsFiles,
-      extends: [
-        eslintPluginPrettierRecommended as InfiniteDepthConfigWithExtends,
-      ],
-    },
-  ];
-}
+    prefixConfigNames('preFormat', options.extraRules.preFormat ?? []),
+    formatConfig(options.format),
+    prefixConfigNames('postFormat', options.extraRules.postFormat ?? []),
+  ]);
 
-//////////////////////////////////////
-
-export function defineConfig(options: Partial<Options> = {}): Config {
-  const resolvedOptions: Options = { ...defaultOptions, ...options };
-
-  const tsAndJsConfig = defineTsAndJsConfig(resolvedOptions);
-
-  return tseslintConfig(ignoreConfig, ...tsAndJsConfig);
+  return config;
 }
