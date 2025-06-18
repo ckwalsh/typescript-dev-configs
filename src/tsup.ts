@@ -13,9 +13,11 @@ import { resolveBinaryOptions } from './tsup/bin.ts';
 import { resolveExportsOptions } from './tsup/exports.ts';
 import { ConfigOptions, ENV_OPTIONS, FullOptions } from './tsup/options.ts';
 
-type OptionsAsyncCb = (options: Options) => Promise<Options[]>;
+export type { Options } from 'tsup';
 
-export function defineConfig(configOptions: ConfigOptions): OptionsAsyncCb {
+export function defineConfig(
+  configOptions: ConfigOptions,
+): (options: Options) => Promise<Options[]> {
   return async (cliOptions: Options) => {
     const platforms =
       configOptions.platforms ??
