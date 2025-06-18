@@ -1,7 +1,6 @@
 {
   "ignoreDependencies": [
     "@arethetypeswrong/cli",
-    "@tsconfig/node",
     "eslint-import-resolver-typescript"
   ],
   "ignore": ["src/@types/eslint-plugin-license-header.d.ts"]
