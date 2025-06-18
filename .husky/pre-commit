@@ -1,3 +1,4 @@
+pnpm install --frozen-lockfile
 pnpm run tsc
 pnpm run build
 pnpm run lint-staged

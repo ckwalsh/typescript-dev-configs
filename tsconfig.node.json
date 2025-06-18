@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "@tsconfig/node/tsconfig.json",
+    "./tsconfigs/tsconfig.node.json",
+    "./tsconfig.common.json"
+  ],
+  "include": ["./*.ts"],
+  "compilerOptions": {
+    "outDir": "./dist/node"
+  },
+  "references": [
+    { "path": "./bin" },
+    { "path": "./src/tsconfig.node.json" },
+    { "path": "./test" }
+  ]
+}

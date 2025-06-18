@@ -11,12 +11,12 @@ import { fileURLToPath } from 'node:url';
 import pkg from './package.json' with { type: 'json' };
 import * as tsup from './src/tsup.ts';
 
-const rootDir = dirname(fileURLToPath(import.meta.url));
-
 const config = tsup.defineConfig({
-  rootDir,
+  rootDir: dirname(fileURLToPath(import.meta.url)),
   pkg,
-  replaceNodeEnv: false,
+  options: {
+    replaceNodeEnv: false,
+  },
 });
 
 export default config;

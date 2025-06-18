@@ -5,12 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { eslint } from '@ckwalsh/typescript-dev-configs';
+import { expect, test } from '@jest/globals';
 
-const config = eslint.defineConfig({
-  node: {
-    nodeIsOnlyPlatform: true,
-  },
+import { defineConfig } from '../src/prettier.ts';
+
+test('prettier', () => {
+  expect(defineConfig).not.toThrow();
 });
-
-export default config;

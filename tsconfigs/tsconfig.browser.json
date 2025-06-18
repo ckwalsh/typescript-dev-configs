@@ -1,6 +1,10 @@
 {
   "extends": ["./tsconfig.common.json"],
   "compilerOptions": {
-    "types": []
+    "target": "es2016",
+    "lib": ["ES2016", "DOM"],
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "moduleSuffixes": [".browser", ""]
   }
 }

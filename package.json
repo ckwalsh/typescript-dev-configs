@@ -22,7 +22,7 @@
     "LICENSE"
   ],
   "bin": {
-    "pnpm-pack-and-attw": "./dist/bin/pnpm-pack-and-attw.cjs"
+    "pnpm-pack-and-attw": "./dist/node/bin/pnpm-pack-and-attw.js"
   },
   "scripts": {
     "attw": "HUSKY=0 pnpm pack --out node_modules/.cache/attw/pack.tgz && (attw --quiet node_modules/.cache/attw/pack.tgz || attw node_modules/.cache/attw/pack.tgz)",
@@ -41,26 +41,21 @@
     ".": {
       "source": "./src/index.ts",
       "import": {
-        "types": "./dist/default/index.d.ts",
-        "import": "./dist/default/index.js"
+        "types": "./dist/node/src/index.d.ts",
+        "default": "./dist/node/src/index.js"
       },
       "require": {
-        "types": "./dist/default/index.d.cts",
-        "require": "./dist/default/index.cjs"
+        "types": "./dist/node/src/index.d.cts",
+        "default": "./dist/node/src/index.cjs"
       }
     },
     "./tsconfig.neutral.json": "./tsconfigs/tsconfig.neutral.json",
     "./tsconfig.browser.json": "./tsconfigs/tsconfig.browser.json",
     "./tsconfig.node.json": "./tsconfigs/tsconfig.node.json"
   },
-  "module": "./dist/default/index.js",
-  "types": "./dist/default/index.d.ts",
-  "directories": {
-    "lib": "dist/default/"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  },
+  "module": "./dist/node/index.js",
+  "types": "./dist/node/index.d.ts",
+  "main": "./dist/node/index.cjs",
   "packageManager": "pnpm@10.12.1",
   "devEngines": {
     "packageManager": {
@@ -71,9 +66,7 @@
   "dependencies": {
     "@eslint/js": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
-    "eslint-import-resolver-typescript": "^4.4.3",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-import-x": "^4.15.2",
+    "eslint-plugin-import": "github:ckwalsh/eslint-plugin-import#319ed202ea7861c5075fc7e40420000e9273444f",
     "eslint-plugin-license-header": "^0.8.0",
     "eslint-plugin-prettier": "^5.4.1",
     "globals": "^16.2.0",
@@ -85,10 +78,12 @@
     "@arethetypeswrong/cli": "^0.18.2",
     "@ckwalsh/prettier-plugin-sort-imports": "^5.2.3",
     "@jest/globals": "^30.0.0",
+    "@microsoft/api-extractor": "^7.52.8",
     "@tsconfig/node": "npm:@tsconfig/node20@^20.1.5",
     "@types/node": "^20.19.0",
-    "@typescript-eslint/utils": "^8.34.0",
+    "esbuild": "^0.25.5",
     "eslint": "^9.29.0",
+    "eslint-import-resolver-typescript": "^4.4.3",
     "husky": "^9.1.7",
     "jest": "^30.0.0",
     "knip": "^5.61.0",

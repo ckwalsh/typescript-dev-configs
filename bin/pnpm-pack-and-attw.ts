@@ -139,10 +139,6 @@ function run(packedPath: string): Promise<number> {
       },
     });
     result.on('exit', resolve);
-
-    result.on('exit', (r) => {
-      resolve(r ?? 0);
-    });
   });
 }
 

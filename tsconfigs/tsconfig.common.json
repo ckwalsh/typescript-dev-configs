@@ -9,15 +9,19 @@
     "noUncheckedIndexedAccess": true,
     // Modules
     "allowImportingTsExtensions": true,
-    //"customConditions": ["source"],
+    "customConditions": ["source"],
     "noUncheckedSideEffectImports": true,
     "rewriteRelativeImportExtensions": true,
     "resolveJsonModule": true,
     // Emit
-    "noEmit": true, // use tsup for building
+    // "noEmit": true, // use tsup for building
     // Interop Contraints
+    "erasableSyntaxOnly": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     // Language and Environment
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "target": "es2016"
   }
 }

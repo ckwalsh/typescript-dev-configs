@@ -6,7 +6,7 @@
  */
 
 import tseslint from 'typescript-eslint';
-import type { Config, InfiniteDepthConfigWithExtends } from 'typescript-eslint';
+import type { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
 
 import { prefixConfigNames } from './eslint/base.ts';
 import type { CoreOptions } from './eslint/core.ts';
@@ -16,6 +16,7 @@ import type { FormatOptions } from './eslint/format.ts';
 import { formatConfig } from './eslint/format.ts';
 import type { IgnoreOptions } from './eslint/ignore.ts';
 import { ignoreConfig } from './eslint/ignore.ts';
+import { NodeOptions, nodeConfig } from './eslint/node.ts';
 import type { StyleOptions } from './eslint/style.ts';
 import { styleConfig } from './eslint/style.ts';
 import type { TypescriptOptions } from './eslint/typescript.ts';
@@ -30,6 +31,7 @@ export interface SimpleOptions {
   typescript: TypescriptOptions;
   style: StyleOptions;
   format: FormatOptions;
+  node: NodeOptions;
   extraRules: Partial<ExtraRules>;
 }
 
@@ -48,15 +50,18 @@ const DEFAULT_OPTIONS: SimpleOptions = {
   typescript: true,
   style: true,
   format: true,
+  node: true,
   extraRules: {},
 };
 
 //////////////////////////////////////
 
-export function defineConfig(partial: Partial<SimpleOptions> = {}): Config {
+export function defineConfig(
+  partial: Partial<SimpleOptions> = {},
+): tseslint.ConfigArray {
   const options: SimpleOptions = { ...DEFAULT_OPTIONS, ...partial };
 
-  const config = tseslint.config([
+  return tseslint.config([
     prefixConfigNames('preIgnore', options.extraRules.preIgnore ?? []),
     ignoreConfig(options.ignore),
     prefixConfigNames('postIgnore', options.extraRules.postIgnore ?? []),
@@ -67,7 +72,7 @@ export function defineConfig(partial: Partial<SimpleOptions> = {}): Config {
         coreConfig(options.core),
         typescriptConfig(options.typescript),
         styleConfig(options.style),
-        ...prefixConfigNames('extra', options.extraRules.tsAndJs ?? []),
+        prefixConfigNames('extra', options.extraRules.tsAndJs ?? []),
       ]),
     },
     {
@@ -75,13 +80,12 @@ export function defineConfig(partial: Partial<SimpleOptions> = {}): Config {
       files: JS_FILES,
       extends: tseslint.config([
         typecheckDisableConfig(options.typescript),
-        ...prefixConfigNames('extra', options.extraRules.jsOnly ?? []),
+        prefixConfigNames('extra', options.extraRules.jsOnly ?? []),
       ]),
     },
+    nodeConfig(options.node),
     prefixConfigNames('preFormat', options.extraRules.preFormat ?? []),
     formatConfig(options.format),
     prefixConfigNames('postFormat', options.extraRules.postFormat ?? []),
   ]);
-
-  return config;
 }

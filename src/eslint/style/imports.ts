@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
-import { flatConfigs } from 'eslint-plugin-import-x';
+import importPlugin from 'eslint-plugin-import';
 import type { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
 
 import type { OptionsBase, PartialOptions } from '../base.ts';
@@ -36,7 +35,10 @@ function recommendedConfig(options: Options): InfiniteDepthConfigWithExtends {
 
   return {
     name: 'recommended',
-    extends: [flatConfigs.recommended, flatConfigs.typescript],
+    extends: [
+      importPlugin.flatConfigs.recommended as InfiniteDepthConfigWithExtends,
+      importPlugin.flatConfigs.typescript as InfiniteDepthConfigWithExtends,
+    ],
   };
 }
 
@@ -48,17 +50,8 @@ function typeImportsConfig(options: Options): InfiniteDepthConfigWithExtends {
   return {
     name: 'type-imports',
     rules: {
-      /*
-      '@typescript-eslint/consistent-type-imports': [
-        'error',
-        {
-          disallowTypeAnnotations: true,
-          fixStyle: 'separate-type-imports',
-          prefer: 'type-imports',
-        },
-      ],
-      */
-      'import-x/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+      'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+      'import/enforce-node-protocol-usage': ['error', 'always'],
     },
   };
 }
@@ -76,7 +69,10 @@ export function importsConfig(
     {
       name: 'resolver',
       settings: {
-        'import-x/resolver-next': [createTypeScriptImportResolver()],
+        'import/resolver': {
+          typescript: true,
+          node: true,
+        },
       },
     },
     recommendedConfig(options),

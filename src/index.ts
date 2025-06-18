@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export * as eslint from './eslint.js';
-export * as jest from './jest.js';
-export * as lintStaged from './lint-staged.js';
-export * as prettier from './prettier.js';
-export * as tsup from './tsup.js';
+export * as eslint from './eslint.ts';
+export * as jest from './jest.ts';
+export * as lintStaged from './lint-staged.ts';
+export * as prettier from './prettier.ts';
+export * as tsup from './tsup.ts';
