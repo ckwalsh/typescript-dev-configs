@@ -27,6 +27,12 @@ const DEFAULTS: Config = {
   moduleNameMapper: {
     '^(\\.\\.?\\/.+)\\.js$': '$1',
   },
+  testPathIgnorePatterns: [
+    '<rootDir>/dist/',
+    '<rootDir>/node_modules/',
+    '<rootDir>/packages/[^/]*/dist/',
+    '<rootDir>/packages/[^/]*/node_modules/',
+  ],
 };
 
 const IS_CI = !!process.env['CI'];
