@@ -7,7 +7,12 @@
 
 /* istanbul ignore file */
 
-import { OnResolveArgs, OnResolveResult, Plugin, PluginBuild } from 'esbuild';
+import type {
+  OnResolveArgs,
+  OnResolveResult,
+  Plugin,
+  PluginBuild,
+} from 'esbuild';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 

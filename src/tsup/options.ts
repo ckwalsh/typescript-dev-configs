@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Options } from 'tsup';
+import type { Options } from 'tsup';
 
-import { Platform } from '../platforms.ts';
+import type { Platform } from '../platforms.ts';
 import { createApplyModuleSuffixesEsbuildPlugin } from './esbuild.ts';
-import { Pkg } from './package.ts';
+import type { Pkg } from './package.ts';
 
 export interface ConfigOptions {
   rootDir: string;

@@ -8,11 +8,8 @@
 import path from 'node:path';
 import type { Options } from 'tsup';
 
-import {
-  ExportsOptions,
-  OPTIONS_BY_PLATFORM,
-  PlatformExportsOptions,
-} from './options.ts';
+import type { ExportsOptions, PlatformExportsOptions } from './options.ts';
+import { OPTIONS_BY_PLATFORM } from './options.ts';
 import { getExportsEntryFromPkg } from './package.ts';
 
 function resolvePlatformExportsOptions(

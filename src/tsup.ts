@@ -11,7 +11,8 @@ import type { Options } from 'tsup';
 import { getPlatformsFromDir } from './platforms.ts';
 import { resolveBinaryOptions } from './tsup/bin.ts';
 import { resolveExportsOptions } from './tsup/exports.ts';
-import { ConfigOptions, ENV_OPTIONS, FullOptions } from './tsup/options.ts';
+import type { ConfigOptions, FullOptions } from './tsup/options.ts';
+import { ENV_OPTIONS } from './tsup/options.ts';
 
 export type { Options } from 'tsup';
 

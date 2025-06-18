@@ -8,7 +8,8 @@
 import path from 'node:path';
 import type { Options } from 'tsup';
 
-import { BinaryOptions, OPTIONS_BY_PLATFORM } from './options.ts';
+import type { BinaryOptions } from './options.ts';
+import { OPTIONS_BY_PLATFORM } from './options.ts';
 import { getBinEntryFromPkg } from './package.ts';
 
 export function resolveBinaryOptions(options: BinaryOptions): Options | null {

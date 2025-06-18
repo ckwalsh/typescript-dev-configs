@@ -50,6 +50,7 @@ function typeImportsConfig(options: Options): InfiniteDepthConfigWithExtends {
   return {
     name: 'type-imports',
     rules: {
+      '@typescript-eslint/consistent-type-imports': 'error',
       'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
       'import/enforce-node-protocol-usage': ['error', 'always'],
     },
