@@ -8,6 +8,7 @@
  */
 
 import childProcess from 'node:child_process';
+import type { BinaryLike } from 'node:crypto';
 import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import os from 'node:os';
@@ -63,6 +64,14 @@ async function getInputsFromMetafile(path: string): Promise<string[]> {
   return Object.keys(inputs);
 }
 
+function isBinaryLike(value: unknown): value is BinaryLike {
+  return (
+    value instanceof Uint8Array ||
+    value instanceof DataView ||
+    typeof value === 'string'
+  );
+}
+
 async function getInputsHash(): Promise<string> {
   const metafiles = await findMetafiles('dist');
 
@@ -84,8 +93,14 @@ async function getInputsHash(): Promise<string> {
 
     const fh = await fs.open(input, 'r');
 
-    for await (const chunk of fh.readableWebStream() as ReadableStream<Uint8Array>) {
-      inputHasher.update(chunk);
+    for await (const chunk of fh.readableWebStream()) {
+      if (isBinaryLike(chunk)) {
+        inputHasher.update(chunk);
+      } else if (chunk instanceof ArrayBuffer) {
+        inputHasher.update(Buffer.from(chunk));
+      } else {
+        throw new Error(`Unexpected chunk type: ${typeof chunk}`);
+      }
     }
 
     await fh.close();
