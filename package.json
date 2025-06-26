@@ -1,6 +1,6 @@
 {
   "name": "@ckwalsh/typescript-dev-configs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Dev tool configs for @ckwalsh/* typescript packages",
   "keywords": [],
   "homepage": "https://github.com/ckwalsh/typescript-configs#readme",
@@ -35,7 +35,8 @@
     "test": "node --experimental-vm-modules --disable-warning=ExperimentalWarning ./node_modules/jest/bin/jest.js",
     "tsc": "tsc --build",
     "tsc:watch": "tsc --build --watch",
-    "prepare": "husky && rm -rf ./dist && tsup --silent"
+    "prepare": "husky && rm -rf ./dist && tsup --silent",
+    "ci:publish": "pnpm publish"
   },
   "exports": {
     ".": {
