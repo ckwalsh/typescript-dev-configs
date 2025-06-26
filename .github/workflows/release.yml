@@ -1,0 +1,67 @@
+name: Release
+
+on: workflow_dispatch
+
+jobs:
+  publish:
+    if: github.ref_name == 'main'
+    name: Publish Packages
+
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+
+    runs-on: ubuntu-latest
+    environment: release
+
+    timeout-minutes: 15
+
+    env:
+      HUSKY: 0
+      NPM_CONFIG_PROVENANCE: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+
+      - name: Install dependencies
+        run: |
+          pnpm install
+
+      - name: Run Linter
+        run: |
+          pnpm run lint
+
+      - name: Run knip
+        run: |
+          pnpm run knip
+
+      - name: Build and Run attw
+        run: |
+          pnpm run attw
+
+      - name: Run Tests
+        run: |
+          pnpm run test
+
+      - name: Create and publish versions
+        uses: changesets/action@v1
+        with:
+          commit: 'chore: update versions'
+          title: 'chore: update versions'
+          publish: 'pnpm ci:publish'
+          setupGitUser: true
+          commitMode: github-api
+          createGithubReleases: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

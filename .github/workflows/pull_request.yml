@@ -1,0 +1,62 @@
+name: PR to main
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build and Test NodeJS ${{ matrix.node-version }}
+
+    permissions:
+      contents: read
+
+    runs-on: default
+
+    timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ['*', 'lts/*', 'lts/-1']
+
+    env:
+      HUSKY: 0
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Use shared pnpm store
+        run: |
+          pnpm config set store-dir "$RUNNER_TOOL_CACHE/.pnpm-store"
+
+      - name: Install dependencies
+        run: |
+          pnpm install
+
+      - name: Run Linter
+        run: |
+          pnpm run lint
+
+      - name: Run knip
+        run: |
+          pnpm run knip
+
+      - name: Build and Run attw
+        run: |
+          pnpm run attw
+
+      - name: Run Tests
+        run: |
+          pnpm run test
