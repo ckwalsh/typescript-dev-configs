@@ -1,0 +1,86 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  main:
+    name: Build and Test
+
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
+
+    runs-on: default
+
+    timeout-minutes: 15
+
+    env:
+      HUSKY: 0
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+
+      - name: Use shared pnpm store
+        run: |
+          pnpm config set store-dir "$RUNNER_TOOL_CACHE/.pnpm-store"
+
+      - name: Install dependencies
+        run: |
+          pnpm install
+
+      - id: changesets
+        name: Process Changesets
+        uses: changesets/action@v1
+        with:
+          commit: 'chore: update versions'
+          title: 'chore: update versions'
+          setupGitUser: true
+          commitMode: github-api
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Linter
+        run: |
+          pnpm run lint
+
+      - name: Run knip
+        run: |
+          pnpm run knip
+
+      - name: Build and Run attw
+        run: |
+          pnpm run attw
+
+      - name: Run Tests
+        run: |
+          pnpm run test
+
+      - id: publishDryRun
+        name: Check for unpublished packages
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: |
+          pnpm publish --recursive --dry-run --report-summary
+          echo -n "publishCount=" >> "$GITHUB_OUTPUT"
+          jq '.publishedPackages[].name' ./pnpm-publish-summary.json | wc -l >> "$GITHUB_OUTPUT"
+
+      - name: Schedule release workflow
+        if: (steps.publishDryRun.outputs.publishCount || 0) > 0
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -d '{"ref":"${{ github.ref_name }}"}' \
+            "${{ github.api_url }}/repos/${{ github.repository }}/actions/workflows/release.yml/dispatches"
