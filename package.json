@@ -35,7 +35,8 @@
     "test": "node --experimental-vm-modules --disable-warning=ExperimentalWarning ./node_modules/jest/bin/jest.js",
     "tsc": "tsc --build",
     "tsc:watch": "tsc --build --watch",
-    "prepare": "husky && rm -rf ./dist && tsup --silent"
+    "prepare": "husky && rm -rf ./dist && tsup --silent",
+    "ci:publish": "pnpm publish"
   },
   "exports": {
     ".": {
