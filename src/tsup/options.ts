@@ -7,6 +7,9 @@
 
 import type { Options } from 'tsup';
 
+import tsconfigBrowser from '../../tsconfigs/tsconfig.browser.json' with { type: 'json' };
+import tsconfigNeutral from '../../tsconfigs/tsconfig.neutral.json' with { type: 'json' };
+import tsconfigNode from '../../tsconfigs/tsconfig.node.json' with { type: 'json' };
 import type { Platform } from '../platforms.ts';
 import { createApplyModuleSuffixesEsbuildPlugin } from './esbuild.ts';
 import type { Pkg } from './package.ts';
@@ -63,12 +66,14 @@ export const ENV_OPTIONS = ENV_DEFAULTS[CURRENT_ENV] ?? {};
 
 export const OPTIONS_BY_PLATFORM: Record<Platform, Options> = {
   browser: {
-    esbuildPlugins: [createApplyModuleSuffixesEsbuildPlugin(['.browser'])],
+    esbuildPlugins: [createApplyModuleSuffixesEsbuildPlugin(tsconfigBrowser)],
   },
-  neutral: {},
+  neutral: {
+    esbuildPlugins: [createApplyModuleSuffixesEsbuildPlugin(tsconfigNeutral)],
+  },
   node: {
     format: ['cjs', 'esm'],
     removeNodeProtocol: false,
-    esbuildPlugins: [createApplyModuleSuffixesEsbuildPlugin(['.node'])],
+    esbuildPlugins: [createApplyModuleSuffixesEsbuildPlugin(tsconfigNode)],
   },
 };
