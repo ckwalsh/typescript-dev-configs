@@ -16,8 +16,17 @@ import type {
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
+interface TSConfig {
+  compilerOptions?: {
+    moduleSuffixes?: string[];
+  };
+}
+
 /* c8 ignore start */
-function setupPluginBuild(build: PluginBuild, suffixes: string[]) {
+function setupPluginBuild(build: PluginBuild, tsconfig: TSConfig) {
+  const rawSuffixes = tsconfig.compilerOptions?.moduleSuffixes ?? [];
+  const suffixes = rawSuffixes.filter((s) => s !== '');
+
   build.onResolve({ filter: /^\./ }, async (args) => {
     const parsedPath = path.parse(args.path);
 
@@ -47,6 +56,10 @@ async function moduleSuffixResolver(
     `${parsedPath.name}${suffix}${parsedPath.ext}`,
   );
 
+  if (p.includes('keys')) {
+    console.log({ p });
+  }
+
   try {
     await fs.access(p);
     return { path: p };
@@ -56,12 +69,12 @@ async function moduleSuffixResolver(
 }
 
 export function createApplyModuleSuffixesEsbuildPlugin(
-  suffixes: string[],
+  tsconfig: TSConfig,
 ): Plugin {
   return {
     name: 'apply-module-suffixes',
     setup(build: PluginBuild) {
-      setupPluginBuild(build, suffixes);
+      setupPluginBuild(build, tsconfig);
     },
   };
 }
