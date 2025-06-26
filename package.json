@@ -3,13 +3,13 @@
   "version": "1.0.4",
   "description": "Dev tool configs for @ckwalsh/* typescript packages",
   "keywords": [],
-  "homepage": "https://github.com/ckwalsh/typescript-configs#readme",
+  "homepage": "https://github.com/ckwalsh/typescript-dev-configs#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ckwalsh/typescript-configs"
+    "url": "https://github.com/ckwalsh/typescript-dev-configs"
   },
   "bugs": {
-    "url": "https://github.com/ckwalsh/typescript-configs/issues"
+    "url": "https://github.com/ckwalsh/typescript-dev-configs/issues"
   },
   "license": "MIT",
   "author": "Cullen Walsh",
