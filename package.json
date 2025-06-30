@@ -81,7 +81,7 @@
     "@ckwalsh/prettier-plugin-sort-imports": "^5.2.3",
     "@jest/globals": "^30.0.3",
     "@tsconfig/node": "npm:@tsconfig/node20@^20.1.6",
-    "@types/node": "^20.19.1",
+    "@types/node": "^24.0.7",
     "esbuild": "^0.25.5",
     "eslint": "^9.29.0",
     "eslint-import-resolver-typescript": "^4.4.4",
