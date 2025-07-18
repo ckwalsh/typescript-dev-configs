@@ -56,10 +56,6 @@ async function moduleSuffixResolver(
     `${parsedPath.name}${suffix}${parsedPath.ext}`,
   );
 
-  if (p.includes('keys')) {
-    console.log({ p });
-  }
-
   try {
     await fs.access(p);
     return { path: p };

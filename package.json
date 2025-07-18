@@ -1,6 +1,6 @@
 {
   "name": "@ckwalsh/typescript-dev-configs",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Dev tool configs for @ckwalsh/* typescript packages",
   "keywords": [],
   "homepage": "https://github.com/ckwalsh/typescript-dev-configs#readme",
@@ -57,7 +57,7 @@
   "module": "./dist/node/index.js",
   "types": "./dist/node/index.d.ts",
   "main": "./dist/node/index.cjs",
-  "packageManager": "pnpm@10.12.1",
+  "packageManager": "pnpm@10.13.1",
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
@@ -66,30 +66,30 @@
   },
   "dependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
-    "@eslint/js": "^9.29.0",
-    "eslint-config-prettier": "^10.1.5",
+    "@eslint/js": "^9.31.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "github:ckwalsh/eslint-plugin-import#319ed202ea7861c5075fc7e40420000e9273444f",
     "eslint-plugin-license-header": "^0.8.0",
-    "eslint-plugin-prettier": "^5.5.1",
-    "globals": "^16.2.0",
+    "eslint-plugin-prettier": "^5.5.3",
+    "globals": "^16.3.0",
     "ts-jest": "^29.4.0",
     "tsup": "^8.5.0",
-    "typescript-eslint": "^8.35.0"
+    "typescript-eslint": "^8.37.0"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.5",
     "@ckwalsh/prettier-plugin-sort-imports": "^5.2.3",
-    "@jest/globals": "^30.0.3",
+    "@jest/globals": "^30.0.4",
     "@tsconfig/node": "npm:@tsconfig/node20@^20.1.6",
-    "@types/node": "^20.19.1",
-    "esbuild": "^0.25.5",
-    "eslint": "^9.29.0",
+    "@types/node": "^24.0.14",
+    "esbuild": "^0.25.6",
+    "eslint": "^9.31.0",
     "eslint-import-resolver-typescript": "^4.4.4",
     "husky": "^9.1.7",
-    "jest": "^30.0.3",
-    "knip": "^5.61.2",
+    "jest": "^30.0.4",
+    "knip": "^5.62.0",
     "lint-staged": "^16.1.2",
-    "prettier": "^3.6.1",
+    "prettier": "^3.6.2",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {

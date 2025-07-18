@@ -1,5 +1,13 @@
 # @ckwalsh/typescript-dev-configs
 
+## 1.0.6
+
+### Patch Changes
+
+- 3a68be8: Remove errant console.log()
+
+  I should probably turn this into a lint rule...
+
 ## 1.0.5
 
 ### Patch Changes
