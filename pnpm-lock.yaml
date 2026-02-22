@@ -18,8 +18,8 @@ importers:
         specifier: ^10.1.8
         version: 10.1.8(eslint@9.39.3(jiti@2.6.1))
       eslint-plugin-import:
-        specifier: github:ckwalsh/eslint-plugin-import#319ed202ea7861c5075fc7e40420000e9273444f
-        version: https://codeload.github.com/ckwalsh/eslint-plugin-import/tar.gz/319ed202ea7861c5075fc7e40420000e9273444f(@typescript-eslint/parser@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@4.4.4)(eslint@9.39.3(jiti@2.6.1))
+        specifier: github:ckwalsh/eslint-plugin-import#main
+        version: https://codeload.github.com/ckwalsh/eslint-plugin-import/tar.gz/57ca9eac849ecace79a7d0e89286f0196b7f7b08(@typescript-eslint/parser@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@4.4.4)(eslint@9.39.3(jiti@2.6.1))
       eslint-plugin-license-header:
         specifier: ^0.8.0
         version: 0.8.0
@@ -62,7 +62,7 @@ importers:
         version: 9.39.3(jiti@2.6.1)
       eslint-import-resolver-typescript:
         specifier: ^4.4.4
-        version: 4.4.4(eslint-plugin-import-x@4.15.2(@typescript-eslint/utils@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@9.39.3(jiti@2.6.1)))(eslint-plugin-import@2.31.0)(eslint@9.39.3(jiti@2.6.1))
+        version: 4.4.4(eslint-plugin-import-x@4.15.2(@typescript-eslint/utils@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@9.39.3(jiti@2.6.1)))(eslint-plugin-import@2.32.0)(eslint@9.39.3(jiti@2.6.1))
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -1935,9 +1935,9 @@ packages:
       eslint-import-resolver-node:
         optional: true
 
-  eslint-plugin-import@https://codeload.github.com/ckwalsh/eslint-plugin-import/tar.gz/319ed202ea7861c5075fc7e40420000e9273444f:
-    resolution: {tarball: https://codeload.github.com/ckwalsh/eslint-plugin-import/tar.gz/319ed202ea7861c5075fc7e40420000e9273444f}
-    version: 2.31.0
+  eslint-plugin-import@https://codeload.github.com/ckwalsh/eslint-plugin-import/tar.gz/57ca9eac849ecace79a7d0e89286f0196b7f7b08:
+    resolution: {tarball: https://codeload.github.com/ckwalsh/eslint-plugin-import/tar.gz/57ca9eac849ecace79a7d0e89286f0196b7f7b08}
+    version: 2.32.0
     engines: {node: '>=4'}
     peerDependencies:
       '@typescript-eslint/parser': '*'
@@ -5556,7 +5556,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@4.4.4(eslint-plugin-import-x@4.15.2(@typescript-eslint/utils@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@9.39.3(jiti@2.6.1)))(eslint-plugin-import@2.31.0)(eslint@9.39.3(jiti@2.6.1)):
+  eslint-import-resolver-typescript@4.4.4(eslint-plugin-import-x@4.15.2(@typescript-eslint/utils@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@9.39.3(jiti@2.6.1)))(eslint-plugin-import@2.32.0)(eslint@9.39.3(jiti@2.6.1)):
     dependencies:
       debug: 4.4.3
       eslint: 9.39.3(jiti@2.6.1)
@@ -5567,7 +5567,7 @@ snapshots:
       tinyglobby: 0.2.15
       unrs-resolver: 1.11.1
     optionalDependencies:
-      eslint-plugin-import: https://codeload.github.com/ckwalsh/eslint-plugin-import/tar.gz/319ed202ea7861c5075fc7e40420000e9273444f(@typescript-eslint/parser@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@4.4.4)(eslint@9.39.3(jiti@2.6.1))
+      eslint-plugin-import: https://codeload.github.com/ckwalsh/eslint-plugin-import/tar.gz/57ca9eac849ecace79a7d0e89286f0196b7f7b08(@typescript-eslint/parser@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@4.4.4)(eslint@9.39.3(jiti@2.6.1))
       eslint-plugin-import-x: 4.15.2(@typescript-eslint/utils@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@9.39.3(jiti@2.6.1))
     transitivePeerDependencies:
       - supports-color
@@ -5579,7 +5579,7 @@ snapshots:
       '@typescript-eslint/parser': 8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3)
       eslint: 9.39.3(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 4.4.4(eslint-plugin-import-x@4.15.2(@typescript-eslint/utils@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@9.39.3(jiti@2.6.1)))(eslint-plugin-import@2.31.0)(eslint@9.39.3(jiti@2.6.1))
+      eslint-import-resolver-typescript: 4.4.4(eslint-plugin-import-x@4.15.2(@typescript-eslint/utils@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@9.39.3(jiti@2.6.1)))(eslint-plugin-import@2.32.0)(eslint@9.39.3(jiti@2.6.1))
     transitivePeerDependencies:
       - supports-color
 
@@ -5602,7 +5602,7 @@ snapshots:
       - supports-color
     optional: true
 
-  eslint-plugin-import@https://codeload.github.com/ckwalsh/eslint-plugin-import/tar.gz/319ed202ea7861c5075fc7e40420000e9273444f(@typescript-eslint/parser@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@4.4.4)(eslint@9.39.3(jiti@2.6.1)):
+  eslint-plugin-import@https://codeload.github.com/ckwalsh/eslint-plugin-import/tar.gz/57ca9eac849ecace79a7d0e89286f0196b7f7b08(@typescript-eslint/parser@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@4.4.4)(eslint@9.39.3(jiti@2.6.1)):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
