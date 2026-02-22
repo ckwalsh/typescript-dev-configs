@@ -1,4 +1,3 @@
 {
-  "ignoreDependencies": ["@arethetypeswrong/cli"],
   "ignore": ["src/@types/eslint-plugin-license-header.d.ts"]
 }
