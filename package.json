@@ -68,7 +68,7 @@
     "@arethetypeswrong/cli": "^0.18.2",
     "@eslint/js": "^9.39.3",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "github:ckwalsh/eslint-plugin-import#319ed202ea7861c5075fc7e40420000e9273444f",
+    "eslint-plugin-import": "github:ckwalsh/eslint-plugin-import#main",
     "eslint-plugin-license-header": "^0.8.0",
     "eslint-plugin-prettier": "^5.5.5",
     "globals": "^16.5.0",
@@ -94,7 +94,6 @@
   },
   "peerDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
-    "@ckwalsh/prettier-plugin-sort-imports": "^5.2.3",
     "prettier": "^3.5.3",
     "typescript": "^5.8.3"
   }
